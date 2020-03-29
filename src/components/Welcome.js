@@ -38,22 +38,20 @@ const styles = {
     wCard: {
             position: "realtive",
             backgroundColor:  "#D0F5F7",
-            //textColor: "#1C8E9C",
             color: "#1C8D9B",
             fontSize: "250%",
             height: "50%",
             left: "4%",
             width: "144%",
             borderRadius: "50px 50px 50px 50px",
-        borderStyle: "none",
-        boxShadow: "1.5px 1.5px #E6E6E6",
+            borderStyle: "none",
+            boxShadow: "1.5px 1.5px #E6E6E6",
         },
                         
     hearty: {
         position: "relative",
         width: "40%",
         height: "98.5%",
-        //padding: ".2%",
         right: "-60%",
         borderRadius: "50px 50px 50px 50px",
         top: "-85%"
