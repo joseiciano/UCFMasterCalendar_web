@@ -44,8 +44,9 @@ const styles = {
             height: "50%",
             left: "4%",
             width: "144%",
-            borderRadius: "15px 15px 15px 15px"
-
+            borderRadius: "50px 50px 50px 50px",
+        borderStyle: "none",
+        boxShadow: "1.5px 1.5px #E6E6E6",
         },
                         
     hearty: {
@@ -54,7 +55,7 @@ const styles = {
         height: "98.5%",
         //padding: ".2%",
         right: "-60%",
-        borderRadius: "0px 15px 15px 0px",
+        borderRadius: "50px 50px 50px 50px",
         top: "-85%"
     },
 
