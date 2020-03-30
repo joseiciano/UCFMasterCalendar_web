@@ -8,7 +8,7 @@ export default class Welcome extends Component {
     render() {
         return (
             <div>
-                    <Col lg={{ span: 10, offset: 1 }} responsive>
+                    <Col lg={{ span: 9, offset: 2 }} responsive>
                         <Card style={styles.wCard} responsive >
                             <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet"/>
                             
@@ -34,7 +34,7 @@ export default class Welcome extends Component {
                         <Col sm={{ span: 5, offset: 1 }}>
                             <Card.Img src={heartPic} style={styles.hearty} fluid />
                         </Col>
-                        </Row>
+            </Row>
             </Card>
             </Col>
             
@@ -48,10 +48,9 @@ const styles = {
             position: "realtive",
             backgroundColor:  "#D0F5F7",
             color: "#1C8D9B",
-            fontSize: "250%",
             borderRadius: "50px 50px 50px 50px",
             borderStyle: "none",
-            boxShadow: "1.5px 1.5px #E6E6E6",
+            boxShadow: "1.5px 1.5px #E6E6E6"
         },
                         
     hearty: {

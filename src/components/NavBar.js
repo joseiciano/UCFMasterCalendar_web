@@ -30,7 +30,7 @@ export default class MainNavbar extends Component {
                                 </Col>
                                 
 
-                                <Col lg={{ span: 3, offset: 11}}>
+                                <Col lg={{ span: 3, offset: 8}}>
 
                                     <Nav.Link href="#LogIn"> Log in </Nav.Link>
                                 </Col>
