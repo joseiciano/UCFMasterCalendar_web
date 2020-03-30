@@ -10,7 +10,7 @@ export default class ClubList extends Component {
             <Card style={Styles.card}>
                 <Row>
                     <Col sm={{ span: 6, offset: 0 }}>
-                        <Card.Text> <b> Upcoming Events </b> </Card.Text>
+                        <Card.Text> <b> Technology Clubs </b> </Card.Text>
                     </Col>
 
                     <Col sm={{ span: 2, offset: 2 }}>
@@ -20,7 +20,7 @@ export default class ClubList extends Component {
 
                 <Row>
                     <Col lg={{ span: 5, offset: 0 }}>
-                        <Card.Text style={Styles.subtitle}> See what's happening soon in your area. </Card.Text>
+                        <Card.Text style={Styles.subtitle}> Learn about UCF's technology community. </Card.Text>
                     </Col>
 
                 </Row>
