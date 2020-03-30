@@ -36,6 +36,8 @@ export default class ClubList extends Component {
                     <Col sm={{ span: 3, offset: 0 }}>
                         <ClubCard />
                     </Col>
+
+
                 </Row>
             </Card>
         )
