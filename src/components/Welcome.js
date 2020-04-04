@@ -45,7 +45,7 @@ export default class Welcome extends Component {
 
 const styles = {
     wCard: {
-            position: "realtive",
+            position: "relative",
             backgroundColor:  "#D0F5F7",
             color: "#1C8D9B",
             borderRadius: "50px 50px 50px 50px",
