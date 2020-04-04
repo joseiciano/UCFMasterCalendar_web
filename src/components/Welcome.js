@@ -8,7 +8,7 @@ export default class Welcome extends Component {
     render() {
         return (
             <div>
-                    <Col lg={{ span: 9, offset: 2 }} responsive>
+                <Col lg={{span: 10, offset: 1}} responsive>
                         <Card style={styles.wCard} responsive >
                             <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet"/>
                             

@@ -14,7 +14,7 @@ export default class MainNavbar extends Component {
                     <Navbar bg="light" variant="light">
                         {/*? Possibily will have to change home to Main because that is the component name?*/}
                         {/*? OR WILL have to put #url! that seems like the best option right now*/}
-                        <Col sm={3}>
+                        <Col sm={{span: 3, offset: 0}}>
                             <Navbar.Brand style={styles.knightro} > Knightro </Navbar.Brand>
                         </Col>
 
@@ -25,12 +25,12 @@ export default class MainNavbar extends Component {
                                         <Nav.Link href="#Main" style={styles.center}> Home </Nav.Link>
                                 </Col>
                                 
-                                <Col lg={{ span: 3, offset: 0 }}>
+                                <Col lg={{ span: 7, offset: 0 }}>
                                         <Nav.Link href="#Clubs" style={styles.center}> Clubs </Nav.Link>
                                 </Col>
                                 
 
-                                <Col lg={{ span: 3, offset: 8}}>
+                                <Col lg={{ span: 3, offset: 6}}>
 
                                     <Nav.Link href="#LogIn"> Log in </Nav.Link>
                                 </Col>

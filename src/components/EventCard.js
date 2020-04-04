@@ -54,7 +54,7 @@ const Styles = {
     },
 
     card: {
-        width: "15rem",
+        width: "16rem",
         height: "11rem"
     },
 

@@ -36,8 +36,6 @@ export default class ClubList extends Component {
                     <Col sm={{ span: 3, offset: 0 }}>
                         <ClubCard />
                     </Col>
-
-
                 </Row>
             </Card>
         )
@@ -46,7 +44,7 @@ export default class ClubList extends Component {
 
 const Styles = {
     card: {
-        width: "60rem",
+        width: "67rem",
         border: "none",
     },
 

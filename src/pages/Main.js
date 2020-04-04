@@ -13,10 +13,10 @@ import ClubList from "../components/ClubList";
 export default class Main extends Component {
   render() {
       return (
-          <div style={Styles.homepage}>
+          <div  style={Styles.homepage}>
               <Row>
-                  <Col sm={{ span: 11, offset: 1 }}>
-                      <Navbar />
+                  <Col >
+                      <Navbar/>
                   </Col>
               </Row>
               <br />
@@ -30,18 +30,20 @@ export default class Main extends Component {
               <br />
 
               <Row>
-                  <Col sm={{ span: 7, offset: 3 }}>
+                  <Col sm={{ span: 9, offset: 2 }}>
                       <EventList />  
                   </Col>
               </Row>
+
               <br />
               <br />
 
               <Row>
-                  <Col sm={{ span: 7, offset: 3 }}>
+                  <Col sm={{ span: 7, offset: 2 }}>
                       <ClubList />
                   </Col>
               </Row>
+
               <br/>
               <br/>
 
@@ -53,7 +55,7 @@ export default class Main extends Component {
 const Styles = {
     homepage: {
         // disables horizontal scrollbar
-        overflowX: "hidden"
+        overflowX: "hidden", 
     },
 
     button: {
@@ -63,5 +65,9 @@ const Styles = {
         border: "none",
         backgroundColor: "white",
         color: "#1C8D9B",
+    },
+
+    navBar: {
     }
+
 };

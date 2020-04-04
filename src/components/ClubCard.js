@@ -25,7 +25,7 @@ export default class ClubCard extends Component {
 
 const Styles = {
     card: {
-        width: "14rem",
+        width: "16rem",
         borderRadius: "15px"
     },
 

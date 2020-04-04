@@ -9,11 +9,11 @@ export default class EventList extends Component {
         return (
             <Card style={Styles.card}>
                 <Row>
-                    <Col sm={{ span: 6, offset: 0 }}>
+                    <Col sm={{ span: 7, offset: 0 }}>
                         <Card.Text> <b> Upcoming Events </b> </Card.Text>
                     </Col>
 
-                    <Col sm={{ span: 2, offset: 2 }}>
+                    <Col sm={{ span: 2, offset: 1 }}>
                         <Button style={Styles.button}> <b>See all </b></Button>
                     </Col>
                 </Row>
@@ -44,7 +44,7 @@ export default class EventList extends Component {
 
 const Styles = {
     card: {
-        width: "60rem",
+        width: "67rem",
         border: "none",
     },
 
