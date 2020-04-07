@@ -21,15 +21,17 @@ export default class Welcome extends Component {
                             </Card.Text>
                             <Card.Text style={Styles.formFields} responsive> 
                                 <Form>
-                                        <Form.Group as={Col} md="7" controlId="validationFormik05" controlId="formGroupEmail">
+                                        <Form.Group as={Col} md="10" controlId="validationFormik05" controlId="formGroupEmail">
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type="email" placeholder="Enter email" />
                                         </Form.Group>
-                                        <Form.Group as={Col} md="7" controlId="validationFormik05" controlId="formGroupPassword">
+                                        <Form.Group as={Col} md="10" controlId="validationFormik05" controlId="formGroupPassword">
                                         <Form.Label>Password</Form.Label>
                                         <Form.Control type="password" placeholder="Password" />
                                         </Form.Group>
-                                    <Button type="submit">Sign in your account</Button>
+                                    <Button style={Styles.btn} type="submit">Sign in your account</Button>
+                                    <Button style={Styles.btn2} variant="" type="submit" size="sm">Have an account? Sign in</Button>
+                                    <Button style={Styles.btn3} variant="" type="submit" size="sm">Forgot Password?</Button>
                                 </Form>
                             </Card.Text>
                         </Col>
@@ -69,6 +71,8 @@ const Styles = {
         position: "relative",
         fontFamily: "Arial",
         fontSize: "xxx-large",
+        color: "linear-gradient(90deg, rgba(75,195,163,1) 16%, rgba(124,203,209,1) 43%, rgba(139,242,242,1) 81%)",
+
     },
 
     formFields: {
@@ -77,6 +81,30 @@ const Styles = {
         position: "relative",
         fontFamily: "Arial",
         
-    }
+    },
 
+    btn: {
+        position: "relative",
+        left: "10%",
+        bottom: "-10px",
+        borderRadius: "50px 50px 50px 50px",
+
+        // Color
+        border: "1px solid white",
+        color: "white",
+        background:
+        "linear-gradient(90deg, rgba(72,218,238,1) 0%, rgba(126,210,217,1) 43%, rgba(176,252,252,1) 91%)"
+    },
+
+    btn2: {
+        position: "relative",
+        left: "-30%",
+        bottom: "-45px",
+    },
+
+    btn3: {
+        position: "relative",
+        left: "8.5%",
+        bottom: "-40px",
+    },
 };
