@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import AllEvents from "./pages/AllEvents";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
         <Route exact path="/main" component={Main} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/allEvents" component={AllEvents} />
       </Router>
     );
   }
