@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Card, Image, Row, Col } from 'react-bootstrap';
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import dude from "../icons/dude.png"
+import headertxt from "../icons/hText.PNG"
 
 
 
@@ -16,9 +17,7 @@ export default class Welcome extends Component {
                     <Card style={Styles.mainWindow} responsive >  
                         <Row>
                         <Col xs={6} md={5}>
-                            <Card.Text style={Styles.headerText} responsive>
-                                <b> Knightro </b>
-                            </Card.Text>
+                            <Image src={headertxt} style={Styles.headerText} fluid/>                        
                             <Card.Text style={Styles.formFields} responsive> 
                                 <Form>
                                         <Form.Group as={Col} md="10" controlId="validationFormik05" controlId="formGroupEmail">
@@ -68,11 +67,8 @@ const Styles = {
     headerText: {
         top: "20%",
         left: "12%",
+        bottom: "-120px",
         position: "relative",
-        fontFamily: "Arial",
-        fontSize: "xxx-large",
-        color: "linear-gradient(90deg, rgba(75,195,163,1) 16%, rgba(124,203,209,1) 43%, rgba(139,242,242,1) 81%)",
-
     },
 
     formFields: {
@@ -85,7 +81,7 @@ const Styles = {
 
     btn: {
         position: "relative",
-        left: "10%",
+        left: "20%",
         bottom: "-10px",
         borderRadius: "50px 50px 50px 50px",
 
@@ -98,13 +94,13 @@ const Styles = {
 
     btn2: {
         position: "relative",
-        left: "-30%",
+        left: "-20%",
         bottom: "-45px",
     },
 
     btn3: {
         position: "relative",
-        left: "8.5%",
+        left: "19%",
         bottom: "-40px",
     },
 };
