@@ -2,31 +2,55 @@ import React from 'react';
 import { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Row, Col, Button } from 'react-bootstrap';
-import pin from "../icons/pin.png"
+// remove this
+import pin from "../icons/pin.png";
 
-//TO DO convert view more picture into a button....
+import firebase from 'firebase';
+import axios from 'axios';
+import querystring from 'querystring';
 
 export default class EventCard extends Component {
+    
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            // does this include the day of the week prefix?
+            eventTime: '',
+            //okay is this in the db?
+            eventTitle: '',
+            description: '',
+            // in the erd as an id, do I have to like lookup the id to see which
+            // club in a string it is?
+            club: '',
+            location: '',
+            // how do I initialize an image, what would catching an image look like?
+            // oh my would this be like a hyperlink?
+            image: ''
+        };
+    }
+
+
     render() {
         return (
             <Card style={Styles.card}>
                 <Card.Body className="text-left">
                     <Col sm={{ span: 0, offset: 0 }}>
-                        <Card.Subtitle style={Styles.dateText}><b><p>WED, FEB 19, 5:30PM </p></b></Card.Subtitle>
-                        <Card.Title style={Styles.eventTitle}><b>React Fundamentals: Introduction to React</b></Card.Title>
+                        <Card.Subtitle style={Styles.dateText}><b><p> {this.props.eventTime} </p></b></Card.Subtitle>
+                        <Card.Title style={Styles.eventTitle}><b>{this.props.eventTitle}</b></Card.Title>
                         <Card.Text style={Styles.eventHost}>
-                            Knight Hacks
+                            {this.props.club}
                          </Card.Text>
 
                         <Row>
                             <Col sm={{ span: .5, offset: 1 }}/>
-                            <Card.Img src={pin} style={Styles.pinImage} />
-                            <Card.Text style={Styles.locationText}> HEC 450 </Card.Text>
+                            <Card.Img src={ this.props.image } style={Styles.pinImage} />
+                            <Card.Text style={Styles.locationText}> {this.props.location} </Card.Text>
                         </Row>
 
                         <Row>
                             <Col sm={{ span: 7, offset: 7 }}>
-                                <Button variant="outline-info" style={Styles.button}>View More</Button>
+                                <Button variant="outline-info" style={Styles.button} onClick={navigateViewMore}>View More</Button>
                             </Col>
                         </Row>
 
@@ -36,6 +60,10 @@ export default class EventCard extends Component {
         )
     }
 }
+
+const navigateViewMore = () => {
+    window.location.href = "/viewEvent"
+};
 
 const Styles = {
 
@@ -55,6 +83,7 @@ const Styles = {
 
     card: {
         width: "16rem",
+        // TODO: MAKE THIS AUTO? or make this min height so the cards can be all the same? dunno, or just make sure it can't get stretched out
         height: "11rem"
     },
 
