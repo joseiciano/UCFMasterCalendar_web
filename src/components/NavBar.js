@@ -32,11 +32,11 @@ export default class MainNavbar extends Component {
 
                                 <Col lg={{ span: 3, offset: 6}}>
 
-                                    <Nav.Link href="#LogIn"> Log in </Nav.Link>
+                                    <Nav.Link href="#LogIn" onClick={navigateLogin}> Log in </Nav.Link>
                                 </Col>
                                 
                                 <Col lg={{ span: 4, offset: 0 }}>
-                                    <Nav.Link href="#SignUp"> Sign Up </Nav.Link>
+                                    <Nav.Link href="#SignUp" onClick={navigateSignup}> Sign Up </Nav.Link>
 
                                 </Col>
                             </Nav>
@@ -52,6 +52,14 @@ export default class MainNavbar extends Component {
     }
     
 }
+
+const navigateLogin = () => {
+    window.location.href = "/login";
+};
+
+const navigateSignup = () => {
+    window.location.href = "/register";
+};
 
 const styles = {
     // href is that little badge in the left hand corner that tells you the hyperlink address
