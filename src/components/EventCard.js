@@ -2,7 +2,10 @@ import React from 'react';
 import { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Row, Col, Button } from 'react-bootstrap';
-import pin from "../icons/pin.png"
+import pin from "../icons/pin.png";
+import firebase from 'firebase';
+import axios from 'axios';
+import querystring from 'querystring';
 
 
 export default class EventCard extends Component {
@@ -12,10 +15,32 @@ export default class EventCard extends Component {
         this.state = {
             title: '',
             host: '',
-            startTime: null,
+            date: '',
+            start: '',
             location: '',
+            clubId: ''
         }
     };
+
+    componentDidMount() {
+        let currentComponent = this;
+
+        // now get the club, do this after brian creates
+        var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/clubs/" + this.props.clubId + "/";
+
+        axios
+            .get(
+                hyper
+            )
+            .then(res => {
+                console.log(res.data.data.name);
+                currentComponent.setState({ host: res.data.data.name });
+            })
+            .catch(e => {
+                console.log("Error getting club", e);
+            });
+
+    }
 
     render() {
         console.log(this.props.title);
@@ -23,10 +48,10 @@ export default class EventCard extends Component {
             <Card style={Styles.card}>
                 <Card.Body className="text-left">
                     <Col sm={{ span: 0, offset: 0 }}>
-                        <Card.Subtitle style={Styles.dateText}><b><p>{this.props.startTime}</p></b></Card.Subtitle>
+                        <Card.Subtitle style={Styles.dateText}><b><p>{this.props.date} at {this.props.start}</p></b></Card.Subtitle>
                         <Card.Title style={Styles.eventTitle}><b>{this.props.title}</b></Card.Title>
                         <Card.Text style={Styles.eventHost}>
-                            Hosted by {this.props.host}
+                            Hosted by <b>{this.state.host} </b>
                         </Card.Text>
 
                         <Row>
@@ -37,7 +62,7 @@ export default class EventCard extends Component {
 
                         <Row>
                             <Col sm={{ span: 7, offset: 7 }}>
-                                <Button variant="outline-info" style={Styles.button}>View More</Button>
+                                <Button variant="outline-info" style={Styles.button} onClick={navigateViewMore}>View More</Button>
                             </Col>
                         </Row>
 
@@ -48,6 +73,10 @@ export default class EventCard extends Component {
     }
 }
 
+const navigateViewMore = () => {
+    window.location.href = "/viewEvent"
+};
+
 const Styles = {
 
     eventHost: {
@@ -57,7 +86,8 @@ const Styles = {
     button: {
         fontSize: "xx-small",
         width: "74%",
-        height: "87%"
+        height: "87%",
+        marginTop: "10%"
     },
 
     eventTitle: {

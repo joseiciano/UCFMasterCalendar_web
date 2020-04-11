@@ -11,6 +11,10 @@ export default class CreateEventPage extends Component {
 
         this.state = {
             clubs: [],
+            host: '',
+            title: '',
+            description: '',
+            location: ''
             //clubName: ""
         };
 

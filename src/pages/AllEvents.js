@@ -7,13 +7,52 @@ import axios from "axios";
 
 // To DO: image should be club image.
 
+const days = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+];
+const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+];
+const dateendings = [
+    'th',
+    'st',
+    'nd',
+    'rd',
+    'th',
+    'th',
+    'th',
+    'th',
+    'th',
+    'th',
+];
+
+
 export default class AllEvents extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            events: []
+            events: [],
+            //array of the club names
+            clubs: []
         };
 
     };
@@ -28,7 +67,25 @@ export default class AllEvents extends Component {
                     hyper
             ).then(res => {
                 console.log(res)
-                    currentComponent.setState({ events: res.data });
+                currentComponent.setState({ events: res.data });
+
+                //var hyper2 = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/clubs/" + res.data.clubId
+
+                //// var host;
+                //axios
+                //    .get(
+                //        hyper2
+                //    )
+                //    .then(res2 => {
+                //        console.log(res2);
+                //        console.log("name of it:" + res.data.data.name);
+                //        currentComponent.setState({ clubs: res2.data });
+                //        //currentComponent.setState({ clubs: res.data });
+                //    })
+                //    .catch(e => {
+                //        console.log("Error getting club", e);
+                //    });
+
                 })
                 .catch(e => {
                     console.log("Error getting events", e);
@@ -75,15 +132,45 @@ export default class AllEvents extends Component {
                     </Col>
 
                 </Row>
-               
-                {this.state.events.map(event => (
-                    <Row>
-                    <Col sm={{ span: 11, offset: 1 }}>
-                            <HorizontalEvent key={event.data.id} title={event.data.title} host={event.data.host} location={event.data.location} description={event.data.description} />
-                    </Col>
-                    </Row>
-                            ))}
-                
+                {
+                    this.state.events.map((event, idx) => {
+                        if (idx != -128) {
+                            const start = new Date(event.data.startTime._seconds * 1000);
+                            let day = days[start.getDay() - 1];
+                            let month = months[start.getMonth() - 1];
+                            let year = start.getFullYear();
+                            let date = start.getDate();
+                            let dateending =
+                                date === '11' || date === '12' ? 'th' : dateendings[date % 10];
+
+                            const startTime = start
+                                .toTimeString()
+                                .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
+                            const fullStartDate = `${day}, ${month} ${date}${dateending}, ${year}`;
+
+
+                            const end = new Date(event.data.endTime._seconds * 1000);
+                            day = days[end.getDay() - 1];
+                            month = months[end.getMonth() - 1];
+                            year = end.getFullYear();
+                            date = end.getDate();
+                            dateending =
+                                date === '11' || date === '12' ? 'th' : dateendings[date % 10];
+
+                            const endTime = end
+                                .toTimeString()
+                                .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
+
+                            
+
+                            return <Row>
+                                <Col sm={{ span: 11, offset: 1 }}>
+                                    <HorizontalEvent key={event.data.id} title={event.data.title} location={event.data.location} description={event.data.description} startTime={startTime} date={fullStartDate} endTime={endTime} clubId={event.data.clubId} />
+                                </Col>
+                            </Row>
+                        }
+                    })
+                }
             </div>
         );
     }  

@@ -6,6 +6,44 @@ import EventCard from "../components/EventCard";
 import * as firebase from "firebase/app";
 import axios from "axios";
 
+const days = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+];
+const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+];
+const dateendings = [
+    'th',
+    'st',
+    'nd',
+    'rd',
+    'th',
+    'th',
+    'th',
+    'th',
+    'th',
+    'th',
+];
+
+
+
 export default class EventList extends Component {
 
     constructor(props) {
@@ -27,7 +65,7 @@ export default class EventList extends Component {
             .get(
                 hyper
             ).then(res => {
-                // console.log(res)
+                 console.log(res)
                 currentComponent.setState({ events: res.data });
             })
             .catch(e => {
@@ -51,6 +89,7 @@ export default class EventList extends Component {
                         console.log("Error getting club", e);
                     });
         */
+
     }
 
     render() {
@@ -87,7 +126,20 @@ export default class EventList extends Component {
                     {
                         this.state.events.map((event, idx) => {
                             if (idx < 3) {
-                                return <EventCard title={event.data.title} location={event.data.location}  />
+                                const start = new Date(event.data.startTime._seconds * 1000);
+                                let day = days[start.getDay() - 1];
+                                let month = months[start.getMonth() - 1];
+                                let year = start.getFullYear();
+                                let date = start.getDate();
+                                let dateending =
+                                    date === '11' || date === '12' ? 'th' : dateendings[date % 10];
+
+                                const startTime = start
+                                    .toTimeString()
+                                    .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
+                                const fullStartDate = `${day}, ${month} ${date}${dateending}, ${year}`;
+
+                                return <EventCard title={event.data.title} location={event.data.location} eventId={event.id} date={fullStartDate} clubId={event.data.clubId} start={startTime}/>
                             }
                         })
                     }

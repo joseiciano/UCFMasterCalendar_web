@@ -10,6 +10,8 @@ import firebase from 'firebase';
 import axios from 'axios';
 import querystring from 'querystring';
 
+
+
 export default class HorizontalEvent extends Component {
 
     constructor(props) {
@@ -19,8 +21,10 @@ export default class HorizontalEvent extends Component {
         this.state = {
             title: '',
             host: '',
-            startTime: null,
-            endTime: null,
+            clubId: '',
+            startTime: '',
+            endTime: '',
+            date: '',
             location: '',
             description: '',
             email: '',
@@ -34,17 +38,50 @@ export default class HorizontalEvent extends Component {
         }
     };
 
+    componentDidMount() {
+        let currentComponent = this;
+
+        // now get the club, do this after brian creates
+            var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/clubs/" + this.props.clubId + "/" ;
+    
+                axios
+                    .get(
+                        hyper
+                    )
+                    .then(res => {
+                        console.log(res.data.data.name);
+                        console.log("email is:" + res.data.data.email);
+                        currentComponent.setState({
+                            host: res.data.data.name,
+                            email: res.data.data.email,
+                            coverImage: res.data.data.coverImage,
+                            facebook: res.data.data.facebook,
+                            instagram: res.data.data.instagram,
+                            meetingInfo: res.data.data.meetingInfo,
+                            other: res.data.data.other,
+                            twitter: res.data.data.twitter,
+                            website: res.data.data.website
+                        });
+                    })
+                    .catch(e => {
+                        console.log("Error getting club", e);
+                    });
+       
+    }
+
     render() {
         return (
             <Card style={Styles.card}>
                 <Row>
                     <Col lg={{ span: 3, offset: 0 }}>
-                        <Card.Img src={eventPic} style={Styles.eventPicture} fluid />
+                        <Card.Img src={this.state.coverImage} style={Styles.eventPicture} fluid />
                     </Col>
 
                     <Col sm={{ span: 9, offset: 0 }}>
-                        <Card.Title style={Styles.title}> <br />{this.title} </Card.Title>
-                        <Card.Subtitle style={Styles.title}> Hosted by <b> {this.props.host}</b> </Card.Subtitle>
+                        <Card.Subtitle style={Styles.blueDate}> <br />{this.props.date} </Card.Subtitle>
+                        
+                        <Card.Title style={Styles.title}> <br />{this.props.title} </Card.Title>
+                        <Card.Subtitle style={Styles.title}> Hosted by <b> {this.state.host}</b> </Card.Subtitle>
                         <br />
 
                         <Row>
@@ -52,9 +89,9 @@ export default class HorizontalEvent extends Component {
                                 <Card.Img src={clock} style={Styles.clock} />
                             </Col>
 
-                            <Col sm={{ span: 8, offset: 0 }}>
-                                <Card.Text Style={Styles.text}> Starts at: bam <br />
-                                    Ends at: bam <br /> </Card.Text>
+                            <Col sm={{ span: 10, offset: 0 }}>
+                                <Card.Text Style={Styles.text}> Starts at: {this.props.startTime} <br />
+                                    Ends at: {this.props.endTime} <br /> </Card.Text>
                             </Col>
 
                         </Row>
@@ -82,7 +119,13 @@ export default class HorizontalEvent extends Component {
                             </Col>
 
                             <Col sm={{ span: 2, offset: 0 }}>
-                                <Example/>
+                                <Example website={this.state.website}
+                                    email={this.state.email}
+                                    twitter={this.state.twitter}
+                                    other={this.state.other}
+                                    facebook={this.state.facebook}
+                                    instagram={this.state.instagram}
+                                           />
                             </Col>
                         </Row>
 
@@ -93,7 +136,7 @@ export default class HorizontalEvent extends Component {
     }
 }
 
-function Example() {
+const Example = (props) => {
     const [smShow, setSmShow] = useState(false);
 
     return (
@@ -117,37 +160,37 @@ function Example() {
                     </Col>
 
                     <Col sm={{ span: 2, offset: 0 }}>
-                        <Modal.Body style={Styles.links}><a href="http://knighthacks.org"> http://knighthacks.org/ </a></Modal.Body>
+                        <Modal.Body style={Styles.links}><a href="{props.website}"> {props.website}</a></Modal.Body>
                     </Col>
                 </Row>
 
                 <Row>
                     <Col sm={{ span: 4, offset: 1 }}>
-                        <Modal.Body style={Styles.socialHeader}>Social Media: </Modal.Body>
+                        <Modal.Body style={Styles.socialHeader}>Instagram: </Modal.Body>
                     </Col>
 
                     <Col sm={{ span: 5, offset: 0 }}>
-                        <Modal.Body style={Styles.links}><a href="http://instagram.com/knighthacks/"> http://instagram.com/knighthacks/ </a></Modal.Body>
+                        <Modal.Body style={Styles.links}><a href="{props.instagram}"> {props.instagram} </a></Modal.Body>
                     </Col>
                 </Row>
 
                 <Row>
                     <Col sm={{ span: 4, offset: 1 }}>
-                        <Modal.Body style={Styles.socialHeader}></Modal.Body>
+                        <Modal.Body style={Styles.socialHeader}>Facebook: </Modal.Body>
                     </Col>
 
                     <Col sm={{ span: 5, offset: 0 }}>
-                        <Modal.Body style={Styles.links}><a href="http://facebook.com/knighthacks/"> http://facebook.com/knighthacks/ </a></Modal.Body>
+                        <Modal.Body style={Styles.links}><a href="{props.facebook}"> {props.facebook} </a></Modal.Body>
                      </Col>
                 </Row>
 
                 <Row>
                     <Col sm={{ span: 4, offset: 1 }}>
-                        <Modal.Body style={Styles.socialHeader}></Modal.Body>
+                        <Modal.Body style={Styles.socialHeader}>Twitter: </Modal.Body>
                     </Col>
 
                     <Col sm={{ span: 5, offset: 0 }}>
-                        <Modal.Body style={Styles.links}><a href="http://twitter.com/knighthacks/"> http://twitter.com/knighthacks/ </a></Modal.Body>
+                        <Modal.Body style={Styles.links}><a href="{props.twitter}"> {props.twitter} </a></Modal.Body>
                     </Col>
                 </Row>
 
@@ -157,7 +200,7 @@ function Example() {
                     </Col>
 
                     <Col sm={{ span: 5, offset: 0 }}>
-                        <Modal.Body style={Styles.links}><a href="mailto:team@knighthacks.org"> team@knighthacks.org </a></Modal.Body>
+                        <Modal.Body style={Styles.links}><a href="mailto:{props.email}"> {props.email} </a></Modal.Body>
                     </Col>
                 </Row>
 
@@ -167,7 +210,7 @@ function Example() {
                     </Col>
 
                     <Col sm={{ span: 5, offset: 0 }}>
-                        <Modal.Body style={Styles.links}><a href="http://slack.com/knighthacks/"> http://slack.com/knighthacks/ </a></Modal.Body>
+                        <Modal.Body style={Styles.links}><a href="{props.other}"> {props.other} </a></Modal.Body>
                     </Col>
                 </Row>
             </Modal>
@@ -268,6 +311,12 @@ const Styles = {
 
     text: {
         marginLeft: "30%"
+    },
+
+    blueDate: {
+        color: "#17A2B8",
+        marginLeft: "5rem",
+        marginBottom: "-1rem"
     }
 
 };
