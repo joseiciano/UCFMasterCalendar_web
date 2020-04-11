@@ -87,7 +87,7 @@ export default class EventList extends Component {
                     {
                         this.state.events.map((event, idx) => {
                             if (idx < 3) {
-                                return <EventCard title={event.data.title} location={event.data.location} startTime={new Date(this.event.data.startTime * 1000).toLocaleDateString("en-US")}  />
+                                return <EventCard title={event.data.title} location={event.data.location}  />
                             }
                         })
                     }
