@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card, Image, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
 import heartPic from "../icons/techHeart.png"
 
 export default class Welcome extends Component {

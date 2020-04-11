@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card, Row, Col, Button, Image, Modal } from 'react-bootstrap';
+import { Card, Row, Col, Button, Modal } from 'react-bootstrap';
 import eventPic from '../icons/eventPic.png';
 import clock from '../icons/clockHorizontal.png';
 import pin from "../icons/pinHorizontal.png";
@@ -11,6 +11,29 @@ import axios from 'axios';
 import querystring from 'querystring';
 
 export default class HorizontalEvent extends Component {
+
+    constructor(props) {
+        super(props);
+
+        // To DO: add the club fields for the modal once the get club is figured out
+        this.state = {
+            title: '',
+            host: '',
+            startTime: null,
+            endTime: null,
+            location: '',
+            description: '',
+            email: '',
+            coverImage: '',
+            facebook: '',
+            instagram: '',
+            meetingInfo: '',
+            other: '',
+            twitter: '',
+            website: ''
+        }
+    };
+
     render() {
         return (
             <Card style={Styles.card}>
@@ -19,38 +42,46 @@ export default class HorizontalEvent extends Component {
                         <Card.Img src={eventPic} style={Styles.eventPicture} fluid />
                     </Col>
 
-
                     <Col sm={{ span: 9, offset: 0 }}>
-
-                        <Card.Title style={Styles.title}> <br />React Fundamentals: Introduction to React </Card.Title>
-                        <Card.Subtitle style={Styles.title}> Hosted by <b> Knight Hacks </b> </Card.Subtitle>
+                        <Card.Title style={Styles.title}> <br />{this.title} </Card.Title>
+                        <Card.Subtitle style={Styles.title}> Hosted by <b> {this.props.host}</b> </Card.Subtitle>
                         <br />
 
-
                         <Row>
-                            <Col sm={{ span: 1, offset: 0 }}>
+                            <Col sm={{ span: 1, offset: 1}}>
                                 <Card.Img src={clock} style={Styles.clock} />
                             </Col>
 
-                            <Col sm={{ span: 11, offset: 0 }}>
-                                <Card.Text> Wednesday, February 20th, 2020 <br />
-                                    5:30PM to 8:30 PM <br /> </Card.Text>
+                            <Col sm={{ span: 8, offset: 0 }}>
+                                <Card.Text Style={Styles.text}> Starts at: bam <br />
+                                    Ends at: bam <br /> </Card.Text>
                             </Col>
 
                         </Row>
 
                         <Row>
-                            <Col sm={{ span: 1, offset: 0 }}>
+                            <Col sm={{ span: 1, offset: 1 }}>
                                 <Card.Img src={pin} style={Styles.pin} />
                             </Col>
 
-                            <Col sm={{ span: 11, offset: 0 }}>
-                                <Card.Text style={Styles.location}> HEC 450 </Card.Text>
+                            <Col sm={{ span: 9, offset: 0 }}>
+                                <Card.Text style={Styles.location}> {this.props.location} </Card.Text>
                             </Col>
                         </Row>
 
                         <Row>
-                            <Col sm={{ span: 6, offset: 10 }}>
+                            <Col sm={{ span: 11, offset: 1 }}>
+                                <Card.Text style={Styles.description}> <br/> <b>  Description </b> </Card.Text>
+                                <Card.Text style={Styles.description}> {this.props.description} </Card.Text>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col sm={{ span: 2, offset: 8 }}>
+                                <Button variant="outline-info" style={Styles.buttonUpdate}>Update</Button> {' '}
+                            </Col>
+
+                            <Col sm={{ span: 2, offset: 0 }}>
                                 <Example/>
                             </Col>
                         </Row>
@@ -156,7 +187,7 @@ const Styles = {
     },
 
     eventPicture: {
-        width: "105%",
+        width: "140%",
         height: "100%",
         left: "10%",
     },
@@ -164,31 +195,49 @@ const Styles = {
     clock: {
         width: "110%",
         height: "80%",
-        marginTop: "10%"
+        marginTop: "10%",
+        marginLeft: "10%"
         //border: "1px solid #021a40",
     },
 
     pin: {
         width: "100%",
         height: "80%",
+        marginLeft: "10%"
         //border: "1px solid #021a40"
+    },
+
+    description: {
+        marginLeft: "3%",
+        marginRight: "2%"
     },
 
     button: {
         width: "5rem",
         height: "2rem",
         fontSize: "small",
-        marginBottom: "2%",
+        marginBottom: "6%",
+        marginTop: "2%",
         borderRadius: "10px",
-        marginLeft: "2.5%"
+        marginLeft: "15%"
+    },
+
+    buttonUpdate: {
+        width: "5rem",
+        height: "2rem",
+        fontSize: "small",
+        marginBottom: "6%",
+        marginTop: "2%",
+        borderRadius: "10px",
+        marginLeft: "50%",
     },
 
     location: {
-        paddingTop: "1.5%"
+        paddingTop: "1.5%",
     },
 
     title: {
-        marginLeft: "2%"
+        marginLeft: "11%"
     },
 
     header: {
@@ -215,6 +264,10 @@ const Styles = {
         position: "relative",
         marginLeft: "-40%",
         fontSize: "small"
+    },
+
+    text: {
+        marginLeft: "30%"
     }
 
 };

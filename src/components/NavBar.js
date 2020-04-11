@@ -14,8 +14,6 @@ export default class MainNavbar extends Component {
 
                 <Col>
                     <Navbar bg="light" variant="light">
-                        {/*? Possibily will have to change home to Main because that is the component name?*/}
-                        {/*? OR WILL have to put #url! that seems like the best option right now*/}
                         <Col sm={{span: 3, offset: 0}}>
                             <Navbar.Brand style={styles.knightro} onClick={navigateHome} > Knightro </Navbar.Brand>
                         </Col>
@@ -23,15 +21,18 @@ export default class MainNavbar extends Component {
                         <Row >
                             <Nav className="NavOptions">
                            
-                                <Col sm={{ span: 2, offset: 8 }}>
+                                <Col sm={{ span: 2, offset: 6 }}>
                                     <Nav.Link href="#Main" style={styles.center} onClick={navigateHome}> Home </Nav.Link>
                                 </Col>
                                 
-                                <Col lg={{ span: 7, offset: 0 }}>
+                                <Col lg={{ span: 2, offset: 0 }}>
                                     <Nav.Link href="#Clubs" style={styles.center} > Clubs </Nav.Link>
                                 </Col>
-                                
 
+                                <Col lg={{ span: 2, offset: 0 }}>
+                                    <Nav.Link href="#allEvents" style={styles.center} onClick={navigateEvents}> Events </Nav.Link>
+                                </Col>
+                                
                                 <Col lg={{ span: 3, offset: 6}}>
 
                                     <Nav.Link href="#LogIn" onClick={navigateLogin}> Log in </Nav.Link>
@@ -65,6 +66,10 @@ const navigateLogin = () => {
 
 const navigateSignup = () => {
     window.location.href = "/register";
+};
+
+const navigateEvents = () => {
+    window.location.href = "/allEvents";
 };
 
 

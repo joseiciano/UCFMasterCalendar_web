@@ -4,24 +4,35 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import pin from "../icons/pin.png"
 
-//TO DO convert view more picture into a button....
 
 export default class EventCard extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            title: '',
+            host: '',
+            startTime: null,
+            location: '',
+        }
+    };
+
     render() {
+        console.log(this.props.title);
         return (
             <Card style={Styles.card}>
                 <Card.Body className="text-left">
                     <Col sm={{ span: 0, offset: 0 }}>
-                        <Card.Subtitle style={Styles.dateText}><b><p>WED, FEB 19, 5:30PM </p></b></Card.Subtitle>
-                        <Card.Title style={Styles.eventTitle}><b>React Fundamentals: Introduction to React</b></Card.Title>
+                        <Card.Subtitle style={Styles.dateText}><b><p>{this.props.startTime}</p></b></Card.Subtitle>
+                        <Card.Title style={Styles.eventTitle}><b>{this.props.title}</b></Card.Title>
                         <Card.Text style={Styles.eventHost}>
-                            Knight Hacks
-                         </Card.Text>
+                            Hosted by {this.props.host}
+                        </Card.Text>
 
                         <Row>
                             <Col sm={{ span: .5, offset: 1 }}/>
                             <Card.Img src={pin} style={Styles.pinImage} />
-                            <Card.Text style={Styles.locationText}> HEC 450 </Card.Text>
+                            <Card.Text style={Styles.locationText}> {this.props.location} </Card.Text>
                         </Row>
 
                         <Row>
@@ -55,7 +66,8 @@ const Styles = {
 
     card: {
         width: "16rem",
-        height: "11rem"
+        height: "11rem",
+        margin: "0.7rem"
     },
 
     locationText: {
