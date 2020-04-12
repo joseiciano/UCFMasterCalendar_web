@@ -221,7 +221,7 @@ const MoreModal = (props) => {
                                         </Col>
 
                                         <Col sm={{ span: 7, offset: 0 }}>
-                                            <Card.Text style={Styles.links}> <a href={props.other}> {props.other} </a></Card.Text>
+                                            <Card.Text style={Styles.other}> <a href={props.other}> {props.other} </a></Card.Text>
                                         </Col>
                                     </Row>
 
@@ -351,6 +351,11 @@ const Styles = {
 
     links: {
         marginLeft: "-4rem"
+    },
+
+    other: {
+        marginLeft: "-4rem",
+        marginBottom: "1rem"
     }
     
 };
