@@ -15,7 +15,6 @@ export default class CreateEventPage extends Component {
             title: '',
             description: '',
             location: ''
-            //clubName: ""
         };
 
     };
@@ -41,6 +40,7 @@ export default class CreateEventPage extends Component {
         const handleSubmit = () => {
             console.log('submit');
         };
+
         return (
             <div style={Styles.allpage}>
                 <Row>
@@ -97,7 +97,7 @@ export default class CreateEventPage extends Component {
                                             <Form.Control type="text" placeholder="BA 201" />
                                         </Form.Group>
                                         <Row>
-                                            <Col sm={{ span: 3, offset: 10 }}>
+                                            <Col sm={{ span: 3, offset: 11 }}>
                                                 <Button variant="info" style={Styles.button}> <b> Submit </b></Button>
                                             </Col>
                                         </Row>
@@ -135,7 +135,7 @@ const Styles = {
     },
 
     button: {
-        width: "5rem",
+        width: "7rem",
         marginBottom: "9%",
         fontSize: "small",
         borderRadius: "10px"

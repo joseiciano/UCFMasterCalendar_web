@@ -2,7 +2,6 @@ import React from 'react';
 import { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card} from 'react-bootstrap';
-import clubPic from "../icons/knighthacks-team.jpg"
 
 
 export default class ClubCard extends Component {
@@ -18,7 +17,6 @@ export default class ClubCard extends Component {
     };
 
     render() {
-        console.log(this.props)
         return (
             <div>
                 <Card style={Styles.card}>

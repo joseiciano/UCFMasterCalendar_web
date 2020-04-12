@@ -65,40 +65,14 @@ export default class EventList extends Component {
             .get(
                 hyper
             ).then(res => {
-                 console.log(res)
                 currentComponent.setState({ events: res.data });
             })
             .catch(e => {
                 console.log("Error getting events", e);
             });
-
-
-
-        // now get the club, to do
-        /*
-            var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/getClub" + this.clubId + "/" ;
-    
-                axios
-                    .get(
-                        hyper
-                    )
-                    .then(res => {
-                        currentComponent.setState({ clubName : res.data });
-                    })
-                    .catch(e => {
-                        console.log("Error getting club", e);
-                    });
-        */
-
     }
 
     render() {
-        //this.state.events.map(event => {
-        //    console.log(event)
-        //    // console.log(event.data.location)
-        //    return <EventCard title={event.data.title} host={event.data.host} startTime={event.data.startTime} location={event.data.location} />
-        //})
-
         return (
             <Card style={Styles.card}>
                 <Row>
@@ -139,7 +113,19 @@ export default class EventList extends Component {
                                     .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
                                 const fullStartDate = `${day}, ${month} ${date}${dateending}, ${year}`;
 
-                                return <EventCard title={event.data.title} location={event.data.location} eventId={event.id} date={fullStartDate} clubId={event.data.clubId} start={startTime}/>
+                                const end = new Date(event.data.endTime._seconds * 1000);
+                                day = days[end.getDay() - 1];
+                                month = months[end.getMonth() - 1];
+                                year = end.getFullYear();
+                                date = end.getDate();
+                                dateending =
+                                    date === '11' || date === '12' ? 'th' : dateendings[date % 10];
+
+                                const endTime = end
+                                    .toTimeString()
+                                    .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
+
+                                return <EventCard title={event.data.title} location={event.data.location} eventId={event.id} date={fullStartDate} clubId={event.data.clubId} start={startTime} description={event.data.description} end={endTime}/>
                             }
                         })
                     }
@@ -167,7 +153,6 @@ const Styles = {
 
     subtitle: {
         fontSize: "small",
-        //color: "#7C7C7C"
     }, 
 
     button: {

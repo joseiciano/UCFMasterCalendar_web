@@ -27,7 +27,6 @@ export default class ClubList extends Component {
             .get(
                 hyper
             ).then(res => {
-                // console.log(res)
                 currentComponent.setState({ clubs: res.data });
             })
             .catch(e => {
@@ -78,7 +77,6 @@ const Styles = {
 
     subtitle: {
         fontSize: "small",
-        //color: "#7C7C7C"
     },
 
     button: {

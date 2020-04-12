@@ -62,52 +62,16 @@ export default class AllEvents extends Component {
 
             var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/events";
 
-            axios
-                .get(
-                    hyper
+        axios
+            .get(
+                hyper
             ).then(res => {
                 console.log(res)
                 currentComponent.setState({ events: res.data });
-
-                //var hyper2 = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/clubs/" + res.data.clubId
-
-                //// var host;
-                //axios
-                //    .get(
-                //        hyper2
-                //    )
-                //    .then(res2 => {
-                //        console.log(res2);
-                //        console.log("name of it:" + res.data.data.name);
-                //        currentComponent.setState({ clubs: res2.data });
-                //        //currentComponent.setState({ clubs: res.data });
-                //    })
-                //    .catch(e => {
-                //        console.log("Error getting club", e);
-                //    });
-
-                })
-                .catch(e => {
-                    console.log("Error getting events", e);
-                });
-
-        
-
-        // now get the club, do this after brian creates
-    /*
-        var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/getClub" + this.clubId + "/" ;
-
-            axios
-                .get(
-                    hyper
-                )
-                .then(res => {
-                    currentComponent.setState({ clubName : res.data });
-                })
-                .catch(e => {
-                    console.log("Error getting club", e);
-                });
-    */
+            })
+            .catch(e => {
+                console.log("Error getting events", e);
+            });
     }
 
     render() {

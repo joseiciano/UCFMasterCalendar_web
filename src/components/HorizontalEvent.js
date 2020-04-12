@@ -2,15 +2,11 @@ import React from 'react';
 import { Component, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Row, Col, Button, Modal } from 'react-bootstrap';
-import eventPic from '../icons/eventPic.png';
 import clock from '../icons/clockHorizontal.png';
 import pin from "../icons/pinHorizontal.png";
 
 import firebase from 'firebase';
 import axios from 'axios';
-import querystring from 'querystring';
-
-
 
 export default class HorizontalEvent extends Component {
 
@@ -160,7 +156,7 @@ const Example = (props) => {
                     </Col>
 
                     <Col sm={{ span: 2, offset: 0 }}>
-                        <Modal.Body style={Styles.links}><a href="{props.website}"> {props.website}</a></Modal.Body>
+                        <Modal.Body style={Styles.links}><a href={props.website}> {props.website}</a></Modal.Body>
                     </Col>
                 </Row>
 
@@ -170,7 +166,7 @@ const Example = (props) => {
                     </Col>
 
                     <Col sm={{ span: 5, offset: 0 }}>
-                        <Modal.Body style={Styles.links}><a href="{props.instagram}"> {props.instagram} </a></Modal.Body>
+                        <Modal.Body style={Styles.links}><a href={props.instagram}> {props.instagram} </a></Modal.Body>
                     </Col>
                 </Row>
 
@@ -180,7 +176,7 @@ const Example = (props) => {
                     </Col>
 
                     <Col sm={{ span: 5, offset: 0 }}>
-                        <Modal.Body style={Styles.links}><a href="{props.facebook}"> {props.facebook} </a></Modal.Body>
+                        <Modal.Body style={Styles.links}><a href={props.facebook}> {props.facebook} </a></Modal.Body>
                      </Col>
                 </Row>
 
@@ -190,7 +186,7 @@ const Example = (props) => {
                     </Col>
 
                     <Col sm={{ span: 5, offset: 0 }}>
-                        <Modal.Body style={Styles.links}><a href="{props.twitter}"> {props.twitter} </a></Modal.Body>
+                        <Modal.Body style={Styles.links}><a href={props.twitter}> {props.twitter} </a></Modal.Body>
                     </Col>
                 </Row>
 
