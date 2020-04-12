@@ -115,11 +115,11 @@ const MoreModal = (props) => {
                 <Modal.Body>
                     <Modal.Title style={Styles.date} class="text-center">
                        
-                                 {props.date}
+                                 <b> {props.date} </b>
                     </Modal.Title>
 
                     <Modal.Body style={Styles.text} class='text-center'>
-                                Hosted by <b> Association for Computing Machinery </b>
+                        Hosted by <b> {props.host} </b>
                     </Modal.Body>
 
                     <Modal.Body style={Styles.text} class='text-center'>
@@ -210,7 +210,7 @@ const MoreModal = (props) => {
                                         </Col>
 
                                         <Col sm={{ span: 7, offset: 0 }}>
-                                            <Card.Text style={Styles.links}> <a href={props.email}> {props.email} </a></Card.Text>
+                                            <Card.Text style={Styles.links}>{props.email}</Card.Text>
                                         </Col>
                                     </Row>
 
@@ -320,18 +320,21 @@ const Styles = {
     pin: {
         width: "110%",
         height: "85%",
-        marginLeft: "35%"
+        marginLeft: "35%",
+        marginTop: "5%"
     },
 
     modalTime: {
         marginTop: "7%",
-        fontSize: "medium"
+        fontSize: "large",
+        fontWeight: "bold"
     },
 
     modalPlace: {
         marginLeft: "14%",
         marginTop: "7%",
-        fontSize: "medium"
+        fontSize: "large",
+        fontWeight: "bold"
     },
 
     contactInfo: {

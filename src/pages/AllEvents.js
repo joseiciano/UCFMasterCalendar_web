@@ -124,12 +124,12 @@ export default class AllEvents extends Component {
                             const endTime = end
                                 .toTimeString()
                                 .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
-
-                            
+                            console.log("look at the next line");
+                            console.log(event);
 
                             return <Row>
                                 <Col sm={{ span: 11, offset: 1 }}>
-                                    <HorizontalEvent key={event.data.id} title={event.data.title} location={event.data.location} description={event.data.description} startTime={startTime} date={fullStartDate} endTime={endTime} clubId={event.data.clubId} />
+                                    <HorizontalEvent id={event.id} title={event.data.title} location={event.data.location} description={event.data.description} startTime={startTime} date={fullStartDate} endTime={endTime} clubId={event.data.clubId} />
                                 </Col>
                             </Row>
                         }
