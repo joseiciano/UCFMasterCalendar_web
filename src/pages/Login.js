@@ -3,7 +3,7 @@ import { Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MainLoginWindow from "../components/MainLoginWindow";
 
-export default class Main extends Component {
+export default class Login extends Component {
   render() {
       return (
           <div  style={Styles.backdrop}>
@@ -21,6 +21,7 @@ const Styles = {
   backdrop: {
     // Positioning
     position: "fixed",
+    overflowX: "hidden",
 
     // Display
     width: "100%",
