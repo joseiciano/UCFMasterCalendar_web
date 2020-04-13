@@ -1,5 +1,5 @@
 import React from 'react';
-import { Component, useState } from 'react';
+import { Component, useState, Text, Input, TextInput } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Row, Col, Button, Modal, Form, Dropdown} from 'react-bootstrap';
 import clock from '../icons/clockHorizontal.png';
@@ -14,8 +14,8 @@ export default class HorizontalEvent extends Component {
     constructor(props) {
         super(props);
 
-        // To DO: add the club fields for the modal once the get club is figured out
         this.state = {
+            showEditFields: false,
             title: '',
             host: '',
             clubId: '',
@@ -33,12 +33,52 @@ export default class HorizontalEvent extends Component {
             twitter: '',
             website: ''
         }
-    };
+
+        this.updateTitle = this.updateTitle.bind(this);
+        this.updateStartTime = this.updateStartTime.bind(this);
+        this.updateEndTime = this.updateEndTime.bind(this);
+        this.updateDescription = this.updateDescription.bind(this);
+        this.updateLocation = this.updateLocation.bind(this);
+    }
+
+    updateTitle(event) {
+        this.setState({
+            title: event.target.value
+        });
+    }
+
+    updateStartTime(event) {
+        this.setState({
+            startTime: event.target.value
+        });
+    }
+
+    updateEndTime(event) {
+        this.setState({
+            endTime: event.target.value
+        });
+    }
+
+    updateDescription(event) {
+        this.setState({
+            description: event.target.value
+        });
+    }
+
+    updateLocation(event) {
+        this.setState({
+            location: event.target.value
+        });
+    }
+
+    toggleEdit() {
+        this.setState(state => ({ showEditFields: !state.showEditFields }));
+    }
 
     componentDidMount() {
         let currentComponent = this;
 
-        // This stuff if for the contact modal info
+        // This stuff if for the contact modal info, getting the clubs info
             var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/clubs/" + this.props.clubId + "/" ;
     
                 axios
@@ -82,13 +122,15 @@ export default class HorizontalEvent extends Component {
                             hyper
                         )
                         .then(res => {
-                            // refresh page if successful delete uncomment later
-                           // window.location = '/allEvents';
+                            // refresh page if successful delete
+                            window.location = '/allEvents';
                         })
                         .catch(e => {
                             console.log("Error deleting event", e);
                         });
                 }
+
+            window.location.href = "/allEvents";
             //}
         //});
     }
@@ -104,14 +146,14 @@ export default class HorizontalEvent extends Component {
 
                     <Col sm={{ span: 9, offset: 0 }}>
                         <Row>
-                        <Col sm={{ span: 6, offset: 0 }}>
-                            <Card.Subtitle style={Styles.blueDate}> <br />{this.props.date} </Card.Subtitle>
-                        </Col>
+                            <Col sm={{ span: 9, offset: 0 }}>
+                                <Card.Subtitle style={Styles.blueDate}> <br />{this.props.startDate}{this.props.endDate} </Card.Subtitle>
+                            </Col>
 
-                        <Col sm={{ span: 1, offset: 4 }}>
+                            <Col sm={{ span: 1, offset: 1 }}>
                                 <button class="btn btn-default" style={Styles.trashButton} onClick={() => { this.deleteEvent(this.props.id, this.props.title) }}>
-                                    <img src={trashcan} style={Styles.trashImage}/></button>
-                        </Col>
+                                    <img src={trashcan} style={Styles.trashImage} /></button>
+                            </Col>
 
                         </Row>
                         <Card.Title style={Styles.title}> <br />{this.props.title} </Card.Title>
@@ -119,7 +161,7 @@ export default class HorizontalEvent extends Component {
                         <br />
 
                         <Row>
-                            <Col sm={{ span: 1, offset: 1}}>
+                            <Col sm={{ span: 1, offset: 1 }}>
                                 <Card.Img src={clock} style={Styles.clock} />
                             </Col>
 
@@ -142,14 +184,14 @@ export default class HorizontalEvent extends Component {
 
                         <Row>
                             <Col sm={{ span: 11, offset: 1 }}>
-                                <Card.Text style={Styles.description}> <br/> <b>  Description </b> </Card.Text>
+                                <Card.Text style={Styles.description}> <br /> <b>  Description </b> </Card.Text>
                                 <Card.Text style={Styles.description}> {this.props.description} </Card.Text>
                             </Col>
                         </Row>
 
                         <Row>
                             <Col sm={{ span: 2, offset: 8 }}>
-                                <UpdateModal eventId={this.props.key} title={this.props.title} date={this.props.date} description={this.props.description} location={this.props.location} startTime={this.props.startTime} endTime={this.props.endTime} />
+                                <UpdateModal clubId={this.props.clubId} endPlaceholder={this.props.updatePlaceholder} eventId={this.props.id} title={this.props.title} startDate={this.props.startDate} description={this.props.description} location={this.props.location} startTime={this.props.startTime} endTime={this.props.endTime} endDate={this.props.endDate} />
                             </Col>
 
                             <Col sm={{ span: 2, offset: 0 }}>
@@ -159,7 +201,7 @@ export default class HorizontalEvent extends Component {
                                     other={this.state.other}
                                     facebook={this.state.facebook}
                                     instagram={this.state.instagram}
-                                           />
+                                />
                             </Col>
                         </Row>
 
@@ -170,70 +212,104 @@ export default class HorizontalEvent extends Component {
     }
 }
 
-const UpdateModal = (props) => {
-    const [lgShow, setLgShow] = useState(false);
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [endTime, setEndTime] = useState('');
-    const [location, setLocation] = useState('');
+class UpdateModal extends Component {
 
-    const [validated, setValidated] = useState(false);
+    constructor(props) {
+        super(props);
 
-    const handleSubmit = (event) => {
-        //console.log(event.target.elements.formHost.value)
-        //console.log(event.target.elements.eventDescription.value)
-        //console.log(event.target.elements.startTime.value)
-        //console.log(event.target.elements.endTime.value)
-
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
+        this.state = {
+            lgShow: false,
+            title: '',
+            description: '',
+            startTime: '',
+            endtime: '',
+            location: '',
+            validated: false
         }
 
-        ////console.log(document.getElementByID("formHost").value);
-        ////console.log(document.getElementByID("formHost").value)
+        this.handleTitleChange = this.handleTitleChange.bind(this);
+        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+        this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
+        this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
+        this.handleLocationChange = this.handleLocationChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
 
-        setValidated(true);
-        console.log(event);
-        console.log(form);
+    handleTitleChange(event) {
+        this.setState({
+            title: event.target.value
+        });
+    }
 
+    handleDescriptionChange(event) {
+        this.setState({
+            description: event.target.value
+        });
+    }
 
-        //const newinfo = {
-        //    title: event.target.elements.title.value,
-        //    host: event.target.elements.formHost.value,
-        //    description: event.target.elements.eventDescription.value,
-        //    startTime: event.target.elements.startTime.value,
-        //    endTime: event.target.elements.endTime.value,
-        //    location: event.target.elements.location.value
-        //};
-        //axios
-        //    .post(
-        //        `https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/events`,
-        //        newinfo,
-        //    )
-        //    .then(res => window.location.href = "/allEvents")
-        //    .catch(e => console.log('Error posting to server', e.response));
-    };
-   // const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-   // const [startTimeVisible, setStartTimeVisible] = useState(false);
-   // const [endTimeVisible, setEndTimeVisible] = useState(false);
+    handleStartTimeChange(event) {
+        this.setState({
+            startTime: event.target.value
+        });
+    }
 
-    //passed eventId to this so use it when we do the update/put request.
+    handleEndTimeChange(event) {
+        this.setState({
+            endTime: event.target.value
+        });
+    }
+    handleLocationChange(event) {
+        this.setState({
+            location: event.target.value
+        });
+    }
+    
+
+    handleSubmit(event) {
+        this.submitToDatabase(event);
+        event.preventDefault();
+    }
+
+    // To do add the user stuff when sara is done and then also fix my user that are hardcoded rn
+    submitToDatabase() {
+        let eventTitle = this.state.title;
+        let eventDescription = this.state.description;
+        let eventStartTime = this.state.startTime;
+        let eventEndTime = this.state.endTime;
+        let eventLocation = this.state.location;
+        let clubId1 = this.props.clubId;
+        let eventId = this.props.eventId;
+
+        var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/events/" + eventId;
+        var querystring = require('querystring');
+        axios.put(hyper,
+            querystring.stringify({
+                title: eventTitle,
+                description: eventDescription,
+                startTime: eventStartTime,
+                endTime: eventEndTime,
+                location: eventLocation,
+                clubId: clubId1,
+                userId: 'uAy5Y5uJNFdip5z6zeky'
+            })).then(res => { console.log(querystring) });
+
+        window.location.href = "/allEvents";
+    }
+   
+    render() {
     return (
-        <>
-            <Button variant="outline-info" style={Styles.buttonUpdate} onClick={() => setLgShow(true)}>Update</Button>
+        <div>
+            <Button variant="outline-info" style={Styles.buttonUpdate} onClick={() => this.setState({lgShow: true})}>Update</Button>
             <Modal
                 size="lg"
-                show={lgShow}
-                onHide={() => setLgShow(false)}
+                show={this.state.lgShow}
+                onHide={() => this.setState({ lgShow: false })}
                 aria-labelledby="example-modal-sizes-title-lg"
             >
                 <Modal.Header closeButton>
                     <Modal.Title class='modal-title w-100 text-center' style={Styles.modalTitle} id="example-modal-sizes-title-lg">
-                       <b> Update Event </b>
+                        <b> Update Event </b>
                     </Modal.Title>
                 </Modal.Header>
 
@@ -243,43 +319,39 @@ const UpdateModal = (props) => {
                             <Row>
                                 <Col sm={{ span: 11, offset: 0 }}>
                                     <Card.Body>
-                                        <Form noValidate validated={validated} >
+                                        <Form onSubmit={this.handleSubmit}>
+
                                             <Form.Group controlId="title">
-                                                <Form.Label>New Event Title</Form.Label>
-                                                <Form.Control required type="text" placeholder={props.title} />
-                                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                            <Form.Label>New Event Title</Form.Label>
+                                            <Form.Control type="text" placeholder={this.props.title} onChange={this.handleTitleChange} value={this.state.title}  />
                                             </Form.Group>
 
                                             <Form.Group controlId="eventDescription">
                                                 <Form.Label>New Description</Form.Label>
-                                                <Form.Control required type="text" placeholder={props.description} />
-                                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                                <Form.Control type="text" placeholder={this.props.description} onChange={this.handleDescriptionChange} />
                                             </Form.Group>
 
                                             <Form.Group controlId="startTime">
-                                                <Form.Label>New Start Time (original: {props.startTime} on {props.date})</Form.Label>
-                                                <Form.Control type="datetime-local" mode="date" required placeholder={props.startTime}
+                                                <Form.Label>New Start Time (original: {this.props.startTime} on {this.props.startDate})</Form.Label>
+                                                <Form.Control type="datetime-local" value={this.state.startTime}  mode="date" placeholder={this.props.startTime} onChange={this.handleStartTimeChange}
                                                 />
-                                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
 
                                             </Form.Group>
 
                                             <Form.Group controlId="endTime">
-                                                <Form.Label>New End Time (originally: {props.endTime} on {props.date})</Form.Label>
-                                                <Form.Control type="datetime-local" mode="date" required placeholder={props.endTime}
+                                                <Form.Label>New End Time (originally: {this.props.endTime} on {this.props.endPlaceholder})</Form.Label>
+                                                <Form.Control type="datetime-local" mode="date" value={this.state.endTime} placeholder={this.props.endTime} onChange={this.handleEndTimeChange}
                                                 />
-                                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-
                                             </Form.Group>
 
                                             <Form.Group controlId="location">
-                                                <Form.Label>New Location</Form.Label>
-                                                <Form.Control type="text" placeholder={props.location} required />
-                                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                                <Form.Label>Location</Form.Label>
+                                                <Form.Control type="text" value={this.state.location} onChange={this.handleLocationChange} placeholder={this.props.location} />
                                             </Form.Group>
+
                                             <Row>
                                                 <Col sm={{ span: 3, offset: 10 }}>
-                                                    <Button variant="info" onClick={handleSubmit} style={Styles.button}> <b> Submit </b></Button>
+                                                    <Button variant="info" type="submit" style={Styles.button}> <b> Submit </b></Button>
                                                 </Col>
                                             </Row>
                                         </Form>
@@ -290,9 +362,13 @@ const UpdateModal = (props) => {
                     </Col>
                 </Modal.Body>
             </Modal>
-        </>
-    );
+        </div>
+        );
+    }
+    
 }
+
+
 
 const Example = (props) => {
     const [smShow, setSmShow] = useState(false);
@@ -304,7 +380,6 @@ const Example = (props) => {
                 size="med"
                 show={smShow}
                 onHide={() => setSmShow(false)}
-                //aria-labelledby="example-modal-sizes-title-sm"
             >
                 <Modal.Header closeButton>
                     <Modal.Header id="example-modal-sizes-title-sm" style={Styles.header}>
@@ -368,15 +443,13 @@ const Example = (props) => {
                     </Col>
 
                     <Col sm={{ span: 5, offset: 0 }}>
-                        <Modal.Body style={Styles.links}><a href={props.other}> {props.other} </a></Modal.Body>
+                        <Modal.Body style={Styles.links}> {props.other} </Modal.Body>
                     </Col>
                 </Row>
             </Modal>
         </>
     );
 }
-
-
 
 
 const Styles = {
@@ -398,14 +471,12 @@ const Styles = {
         height: "80%",
         marginTop: "10%",
         marginLeft: "10%"
-        //border: "1px solid #021a40",
     },
 
     pin: {
         width: "100%",
         height: "80%",
         marginLeft: "10%"
-        //border: "1px solid #021a40"
     },
 
     description: {
@@ -494,6 +565,10 @@ const Styles = {
     trashImage: {
         width: "100%",
         height: "100%"
+    },
+
+    inputFields: {
+        width: "80%"
     }
 
 };

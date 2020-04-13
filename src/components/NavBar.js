@@ -3,7 +3,7 @@ import { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
 
-// TODO: add onclick for clubs
+// TODO: add onclick for clubs, login, signup
 
 export default class MainNavbar extends Component {
 

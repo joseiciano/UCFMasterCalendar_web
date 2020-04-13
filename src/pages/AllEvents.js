@@ -98,38 +98,37 @@ export default class AllEvents extends Component {
                 </Row>
                 {
                     this.state.events.map((event, idx) => {
-                        if (idx != -128) {
-                            const start = new Date(event.data.startTime._seconds * 1000);
-                            let day = days[start.getDay() - 1];
-                            let month = months[start.getMonth() - 1];
-                            let year = start.getFullYear();
-                            let date = start.getDate();
-                            let dateending =
-                                date === '11' || date === '12' ? 'th' : dateendings[date % 10];
+                        if (idx !== -128) {
+                            let startString = event.data.startTime;
+                            let endString = event.data.endTime;
 
-                            const startTime = start
-                                .toTimeString()
-                                .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
-                            const fullStartDate = `${day}, ${month} ${date}${dateending}, ${year}`;
+                            let DaysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                            let MonthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November" , "December"];
 
 
-                            const end = new Date(event.data.endTime._seconds * 1000);
-                            day = days[end.getDay() - 1];
-                            month = months[end.getMonth() - 1];
-                            year = end.getFullYear();
-                            date = end.getDate();
-                            dateending =
-                                date === '11' || date === '12' ? 'th' : dateendings[date % 10];
+                            let startDateObj = new Date(startString);
+                            let endDateObj = new Date(endString);
 
-                            const endTime = end
-                                .toTimeString()
-                                .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
-                            console.log("look at the next line");
-                            console.log(event);
+                            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
+                            let fullEndDate = endDateObj.toLocaleDateString(undefined, options);
+                            let fullStartDate = startDateObj.toLocaleDateString(undefined, options);
+                            let updatePlaceholder = fullEndDate;
+                            
+
+                            if (fullEndDate === fullStartDate) {
+                                fullEndDate = "";
+                            }
+
+                            else {
+                                fullEndDate = " - " + fullEndDate;
+                            }
+
+                            let startTime = startDateObj.toLocaleTimeString('en-US');
+                            let endTime = endDateObj.toLocaleTimeString('en-US');
                             return <Row>
                                 <Col sm={{ span: 11, offset: 1 }}>
-                                    <HorizontalEvent id={event.id} title={event.data.title} location={event.data.location} description={event.data.description} startTime={startTime} date={fullStartDate} endTime={endTime} clubId={event.data.clubId} />
+                                    <HorizontalEvent updatePlaceholder={updatePlaceholder} id={event.id} title={event.data.title} location={event.data.location} description={event.data.description} startTime={startTime} startDate={fullStartDate} endDate={fullEndDate} endTime={endTime} clubId={event.data.clubId} />
                                 </Col>
                             </Row>
                         }

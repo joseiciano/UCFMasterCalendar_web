@@ -4,7 +4,6 @@ import Navbar from "../components/NavBar";
 import * as firebase from "firebase/app";
 import axios from "axios";
 
-// how to store dropdown choice?
 export default class CreateEventPage extends React.Component {
     constructor(props) {
         super(props);
@@ -28,7 +27,6 @@ export default class CreateEventPage extends React.Component {
         this.handleLocationChange = this.handleLocationChange.bind(this);
         this.handleClubIdChange = this.handleClubIdChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
     }
 
     handleHostChange(event) {
@@ -88,10 +86,10 @@ export default class CreateEventPage extends React.Component {
 
     handleClubIdChange(eventKey, event) {
         this.setState({
-            clubId: eventKey.target.id
+            clubId: eventKey.target.value
         });
 
-        console.log("clubId is:" + eventKey.target.id);
+        console.log("clubId is:" + eventKey.target.value);
 
     }
 
@@ -100,8 +98,7 @@ export default class CreateEventPage extends React.Component {
         event.preventDefault();
     }
 
-    // TO DO:  add the user stuff when sara is done and then also fix my ids that are hardcoded rn
-    // TO OD: add page refresh after it sends
+    // TO DO:  add the user stuff when sara is done and then also fix my userids that are hardcoded rn
     submitToDatabase() {
         let eventTitle = this.state.title;
         let eventDescription = this.state.description;
@@ -122,7 +119,7 @@ export default class CreateEventPage extends React.Component {
                 userId: 'uAy5Y5uJNFdip5z6zeky'
             })).then(res => { console.log(querystring) });
 
-
+        window.location.href = "/allEvents";
     }
                
     componentDidMount() {
@@ -161,9 +158,9 @@ export default class CreateEventPage extends React.Component {
                                     <Form onSubmit={this.handleSubmit}>
                                         <Form.Group controlId="formHost">
                                             <Form.Label>Which club is hosting the event?</Form.Label>
-                                            <Form.Control as="select" custom placeholder="ClubHost" value={this.state.title} onChange={this.handleTitleChange}>
+                                            <Form.Control as="select" custom placeholder="ClubHost" value={this.state.clubId} onChange={this.handleClubIdChange}>
                                                 {this.state.clubs.map(club => (
-                                                    <option id={club.data.id} onChange={this.handleClubIdChange}>{club.data.name}</option>
+                                                    <option value={club.id} label={club.data.name}></option>
                                                 ))}
                                             </Form.Control>
                                         </Form.Group>

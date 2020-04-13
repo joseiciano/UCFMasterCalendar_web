@@ -100,32 +100,32 @@ export default class EventList extends Component {
                     {
                         this.state.events.map((event, idx) => {
                             if (idx < 3) {
-                                const start = new Date(event.data.startTime._seconds * 1000);
-                                let day = days[start.getDay() - 1];
-                                let month = months[start.getMonth() - 1];
-                                let year = start.getFullYear();
-                                let date = start.getDate();
-                                let dateending =
-                                    date === '11' || date === '12' ? 'th' : dateendings[date % 10];
+                                 let startString = event.data.startTime;
+                            let endString = event.data.endTime;
 
-                                const startTime = start
-                                    .toTimeString()
-                                    .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
-                                const fullStartDate = `${day}, ${month} ${date}${dateending}, ${year}`;
+                            let DaysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                            let MonthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November" , "December"];
 
-                                const end = new Date(event.data.endTime._seconds * 1000);
-                                day = days[end.getDay() - 1];
-                                month = months[end.getMonth() - 1];
-                                year = end.getFullYear();
-                                date = end.getDate();
-                                dateending =
-                                    date === '11' || date === '12' ? 'th' : dateendings[date % 10];
 
-                                const endTime = end
-                                    .toTimeString()
-                                    .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
+                            let startDateObj = new Date(startString);
+                            let endDateObj = new Date(endString);
 
-                                return <EventCard title={event.data.title} location={event.data.location} eventId={event.id} date={fullStartDate} clubId={event.data.clubId} start={startTime} description={event.data.description} end={endTime}/>
+                            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+                            let fullEndDate = endDateObj.toLocaleDateString(undefined, options);
+                            let fullStartDate = startDateObj.toLocaleDateString(undefined, options);
+
+                            if (fullEndDate === fullStartDate) {
+                                fullEndDate = "";
+                            }
+
+                            else {
+                                fullEndDate = " - " + fullEndDate;
+                            }
+                                let startTime = startDateObj.toLocaleTimeString('en-US');
+                                let endTime = endDateObj.toLocaleTimeString('en-US');
+
+                                return <EventCard title={event.data.title} location={event.data.location} eventId={event.id} date={fullStartDate} endDate={fullEndDate} clubId={event.data.clubId} start={startTime} description={event.data.description} end={endTime}/>
                             }
                         })
                     }

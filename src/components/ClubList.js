@@ -13,7 +13,6 @@ export default class ClubList extends Component {
 
         this.state = {
             clubs: [],
-            //clubName: ""
         };
 
     };

@@ -6,7 +6,6 @@ import pin from "../icons/pin.png";
 import clock from "../icons/clockHorizontal.png";
 import firebase from 'firebase';
 import axios from 'axios';
-import eventViewMore from "../pages/EventViewMore.js";
 
 
 export default class EventCard extends Component {
@@ -79,7 +78,7 @@ export default class EventCard extends Component {
 
                         <Row>
                             <Col sm={{ span: 7, offset: 7 }}>
-                                <MoreModal title={this.props.title} date={this.props.date} startTime={this.props.start} host={this.state.host}
+                                <MoreModal title={this.props.title} date={this.props.date} endDate={this.props.endDate} startTime={this.props.start} host={this.state.host}
                                     coverImage={this.state.coverImage} description={this.props.description} endTime={this.props.end}
                                     location={this.props.location} instagram={this.state.instagram} facebook={this.state.facebook}
                                     email={this.state.email} twitter={this.state.twitter} other={this.state.other} website={this.state.website}
@@ -114,8 +113,7 @@ const MoreModal = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Modal.Title style={Styles.date} class="text-center">
-                       
-                                 <b> {props.date} </b>
+                        <b> {props.date}{props.endDate} </b>
                     </Modal.Title>
 
                     <Modal.Body style={Styles.text} class='text-center'>
@@ -152,7 +150,7 @@ const MoreModal = (props) => {
                                             <Card.Img style={Styles.pin} src={pin} />
                                         </Col>
 
-                                        <Col sm={{ span: 5, offset: 0 }}>
+                                        <Col sm={{ span: 9, offset: 0 }}>
                                             <Card.Text style={Styles.modalPlace}> {props.location} <br/> </Card.Text>
                                         </Col>
                                     </Row>
@@ -221,7 +219,7 @@ const MoreModal = (props) => {
                                         </Col>
 
                                         <Col sm={{ span: 7, offset: 0 }}>
-                                            <Card.Text style={Styles.other}> <a href={props.other}> {props.other} </a></Card.Text>
+                                            <Card.Text style={Styles.other}> {props.other} </Card.Text>
                                         </Col>
                                     </Row>
 
@@ -265,7 +263,7 @@ const Styles = {
 
     card: {
         width: "16rem",
-        height: "11rem",
+        height: "auto",
         margin: "0.7rem"
     },
 
@@ -281,7 +279,6 @@ const Styles = {
     date: {
         color: "#1198AB",
         fontSize: "medium",
-        //marginLeft: "4.8%"
     },
 
     host: {
@@ -291,7 +288,6 @@ const Styles = {
 
     text: {
         fontSize: "small",
-        //marginLeft: "15%",
         color: "#FFFFFFFFF"
     },
 
@@ -331,7 +327,7 @@ const Styles = {
     },
 
     modalPlace: {
-        marginLeft: "14%",
+        marginLeft: "-22%",
         marginTop: "7%",
         fontSize: "large",
         fontWeight: "bold"
