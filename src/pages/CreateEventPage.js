@@ -16,7 +16,8 @@ export default class CreateEventPage extends React.Component {
             startTime: '',
             location: '',
             clubId: '',
-            clubs: []
+            clubs: [],
+            userId: ''
         };
 
         this.handleHostChange = this.handleHostChange.bind(this);
@@ -106,20 +107,25 @@ export default class CreateEventPage extends React.Component {
         let eventEndTime = this.state.endTime;
         let eventLocation = this.state.location;
         let clubId = this.state.clubId;
+        let userId1 = this.state.userId;
 
-        var querystring = require('querystring');
-        axios.post('https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/events',
-            querystring.stringify({
-                title: eventTitle,
-                description: eventDescription,
-                startTime: eventStartTime,
-                endTime: eventEndTime,
-                location: eventLocation,
-                clubId: clubId,
-                userId: 'uAy5Y5uJNFdip5z6zeky'
-            })).then(res => { console.log(querystring) });
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                var querystring = require('querystring');
+                axios.post('https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/events',
+                    querystring.stringify({
+                        title: eventTitle,
+                        description: eventDescription,
+                        startTime: eventStartTime,
+                        endTime: eventEndTime,
+                        location: eventLocation,
+                        clubId: clubId,
+                        userId: userId1
+                    })).then(res => { console.log(querystring) });
 
-        window.location.href = "/allEvents";
+                window.location.href = "/allEvents";
+            }
+        });
     }
                
     componentDidMount() {
@@ -127,16 +133,23 @@ export default class CreateEventPage extends React.Component {
 
         var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/clubs";
 
-        axios
-            .get(
-                hyper
-            ).then(res => {
-                // console.log(res)
-                currentComponent.setState({ clubs: res.data });
-            })
-            .catch(e => {
-                console.log("Error getting events", e);
-            });
+        // this is fine if we restrict to users because non-users should not be attempting to create events.
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                var uid = user.uid;
+                axios
+                    .get(
+                        hyper
+                    ).then(res => {
+                        // console.log(res)
+                        currentComponent.setState({ clubs: res.data });
+                        currentComponent.setState({ userId: uid });
+                    })
+                    .catch(e => {
+                        console.log("Error getting events", e);
+                    });
+            }
+        });
     }
 
     render() {
@@ -159,9 +172,12 @@ export default class CreateEventPage extends React.Component {
                                         <Form.Group controlId="formHost">
                                             <Form.Label>Which club is hosting the event?</Form.Label>
                                             <Form.Control as="select" custom placeholder="ClubHost" value={this.state.clubId} onChange={this.handleClubIdChange}>
-                                                {this.state.clubs.map(club => (
-                                                    <option value={club.id} label={club.data.name}></option>
-                                                ))}
+                                                {this.state.clubs.map((club, idx) => {
+                                                    if (this.state.userId.localeCompare(club.data.userId) === 0) {
+                                                        return <option value={club.id} label={club.data.name}></option>
+                                                    }
+                                                }
+                                                )}}
                                             </Form.Control>
                                         </Form.Group>
 

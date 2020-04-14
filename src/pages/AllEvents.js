@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { Row, Col, Button } from 'react-bootstrap';
 import Navbar from "../components/NavBar";
 import HorizontalEvent from "../components/HorizontalEvent";
+import RestrictedHorizontalEvent from "../components/RestrictedHorizontalEvent"
 import * as firebase from "firebase/app";
 import axios from "axios";
-
-// To DO: image should be club image.
 
 const days = [
     'Monday',
@@ -51,8 +50,7 @@ export default class AllEvents extends Component {
 
         this.state = {
             events: [],
-            //array of the club names
-            clubs: []
+            userId: ''
         };
 
     };
@@ -61,17 +59,37 @@ export default class AllEvents extends Component {
         let currentComponent = this;
 
             var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/events";
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                var uid = user.uid;
+                axios
+                    .get(
+                        hyper
+                    ).then(res => {
+                        console.log(res)
+                        currentComponent.setState({ events: res.data });
+                        currentComponent.setState({ userId: uid });
+                    })
+                    .catch(e => {
+                        console.log("Error getting events", e);
+                    });
+            }
+            else {
+                axios
+                    .get(
+                        hyper
+                    ).then(res => {
+                        console.log(res)
+                        currentComponent.setState({ events: res.data });
+                        currentComponent.setState({ userId: 'u8LGaBZMGOgI5scFL1oFc6n52a927' });
+                    })
+                    .catch(e => {
+                        console.log("Error getting events", e);
+                    });
+            }
+        });
 
-        axios
-            .get(
-                hyper
-            ).then(res => {
-                console.log(res)
-                currentComponent.setState({ events: res.data });
-            })
-            .catch(e => {
-                console.log("Error getting events", e);
-            });
+
     }
 
     render() {
@@ -85,7 +103,6 @@ export default class AllEvents extends Component {
                 </Row>
                 <br />
                 
-
                 <Row>
                     <Col sm={{ span: 6, offset: 1 }}>
                         <p style={Styles.title}> <b> Events </b> </p>
@@ -101,10 +118,6 @@ export default class AllEvents extends Component {
                         if (idx !== -128) {
                             let startString = event.data.startTime;
                             let endString = event.data.endTime;
-
-                            let DaysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                            let MonthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November" , "December"];
-
 
                             let startDateObj = new Date(startString);
                             let endDateObj = new Date(endString);
@@ -126,11 +139,22 @@ export default class AllEvents extends Component {
 
                             let startTime = startDateObj.toLocaleTimeString('en-US');
                             let endTime = endDateObj.toLocaleTimeString('en-US');
-                            return <Row>
-                                <Col sm={{ span: 11, offset: 1 }}>
-                                    <HorizontalEvent updatePlaceholder={updatePlaceholder} id={event.id} title={event.data.title} location={event.data.location} description={event.data.description} startTime={startTime} startDate={fullStartDate} endDate={fullEndDate} endTime={endTime} clubId={event.data.clubId} />
-                                </Col>
-                            </Row>
+                            if (this.state.userId.localeCompare(event.data.userId) === 0) {
+                                return <Row>
+                                    <Col sm={{ span: 11, offset: 1 }}>
+                                        <HorizontalEvent updatePlaceholder={updatePlaceholder} id={event.id} title={event.data.title} location={event.data.location} description={event.data.description} startTime={startTime} startDate={fullStartDate} endDate={fullEndDate} endTime={endTime} clubId={event.data.clubId} />
+                                    </Col>
+                                </Row>
+                            }
+
+                            else {
+                                return <Row>
+                                    <Col sm={{ span: 11, offset: 1 }}>
+                                        <RestrictedHorizontalEvent updatePlaceholder={updatePlaceholder} id={event.id} title={event.data.title} location={event.data.location} description={event.data.description} startTime={startTime} startDate={fullStartDate} endDate={fullEndDate} endTime={endTime} clubId={event.data.clubId} />
+                                    </Col>
+                                </Row>
+                            }
+                            
                         }
                     })
                 }
