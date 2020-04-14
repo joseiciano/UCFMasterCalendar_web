@@ -26,7 +26,7 @@ export default class MainNavbar extends Component {
                                 </Col>
                                 
                                 <Col lg={{ span: 2, offset: 0 }}>
-                                    <Nav.Link href="#Clubs" style={styles.center} > Clubs </Nav.Link>
+                                    <Nav.Link href="#Clubs" style={styles.center} onClick={navigateClubs} > Clubs </Nav.Link>
                                 </Col>
 
                                 <Col lg={{ span: 2, offset: 0 }}>
@@ -71,6 +71,10 @@ const navigateSignup = () => {
 
 const navigateEvents = () => {
     window.location.href = "/allEvents";
+};
+
+const navigateClubs = () => {
+    window.location.href = "/allClubs";
 };
 
 const styles = {
