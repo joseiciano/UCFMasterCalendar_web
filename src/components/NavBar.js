@@ -56,6 +56,7 @@ export default class MainNavbar extends Component {
     
 }
 
+
 const navigateHome = () => {
     window.location.href = "/Main";
 };
@@ -71,8 +72,6 @@ const navigateSignup = () => {
 const navigateEvents = () => {
     window.location.href = "/allEvents";
 };
-
-
 
 const styles = {
     // href is that little badge in the left hand corner that tells you the hyperlink address
