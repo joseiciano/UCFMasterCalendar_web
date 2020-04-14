@@ -61,13 +61,6 @@ export default class MainLoginWindow extends Component {
             .catch(error => {
                 console.log('error creating user', error);
             });
-
-        //if (success) {
-        //    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        //    user.sendEmailVerification();
-        //    window.location.href = "/Main";
-
-        //}
         
     }
 
