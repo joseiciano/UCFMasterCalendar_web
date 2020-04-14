@@ -139,7 +139,7 @@ export default class AllEvents extends Component {
 
                             let startTime = startDateObj.toLocaleTimeString('en-US');
                             let endTime = endDateObj.toLocaleTimeString('en-US');
-                            if (this.state.userId === event.data.userId) {
+                            if (this.state.userId.localeCompare(event.data.userId) === 0) {
                                 return <Row>
                                     <Col sm={{ span: 11, offset: 1 }}>
                                         <HorizontalEvent updatePlaceholder={updatePlaceholder} id={event.id} title={event.data.title} location={event.data.location} description={event.data.description} startTime={startTime} startDate={fullStartDate} endDate={fullEndDate} endTime={endTime} clubId={event.data.clubId} />
