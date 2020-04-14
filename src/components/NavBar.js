@@ -73,10 +73,6 @@ const navigateEvents = () => {
     window.location.href = "/allEvents";
 };
 
-const navigateClubs = () => {
-    window.location.href = "/allClubs";
-};
-
 const styles = {
     // href is that little badge in the left hand corner that tells you the hyperlink address
     center: {
