@@ -9,13 +9,12 @@ import CreateEventPage from "./pages/CreateEventPage";
 import Swagger from "./components/Swagger";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-
 // yes login and register are opposite I know
 class App extends Component {
   render() {
     return (
       <Router>
-        <Route exact path="/" component={Main} />
+        <Route exact path="/" component={Login} />
         <Route exact path="/main" component={Main} />
         <Route exact path="/login" component={Register} />
         <Route exact path="/register" component={Login} />

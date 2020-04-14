@@ -3,17 +3,16 @@ import { Row, Col, Button } from 'react-bootstrap';
 import Navbar from "../components/NavBar";
 import HorizontalClub from "../components/HorizontalClub";
 import RestrictedHorizontalClub from "../components/RestrictedHorizontalClub";
+import * as firebase from "firebase/app";
 import axios from "axios";
 
 export default class AllClubs extends Component {
-
     constructor(props) {
         super(props);
 
         this.state = {
             clubs: []
         };
-
     };
 
     componentDidMount() {
@@ -21,16 +20,22 @@ export default class AllClubs extends Component {
 
         var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/clubs";
 
-        axios
-            .get(
-                hyper
-        ).then(res => {
-            console.log(res)
-                currentComponent.setState({ clubs: res.data });
-                currentComponent.setState({ userId: "uAy5Y5uJNFdip5z6zeky"})
-            })
-            .catch(e => {
-                console.log("Error getting clubs", e);
+        firebase.auth().onAuthStateChanged(function (user) {
+            var uid = user.uid;
+
+            if (user) {
+                axios
+                    .get(
+                        hyper
+                ).then(res => {
+                    console.log(res)
+                        currentComponent.setState({ clubs: res.data });
+                        currentComponent.setState({ userId: uid})
+                    })
+                    .catch(e => {
+                        console.log("Error getting clubs", e);
+                    });
+                }
             });
     }
 
@@ -66,7 +71,6 @@ export default class AllClubs extends Component {
                                 </Col>
                             </Row>
                         }
-
                         else {
                             return <Row>
                                 <Col sm={{ span: 11, offset: 1 }}>

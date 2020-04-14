@@ -108,10 +108,10 @@ export default class HorizontalEvent extends Component {
 
     deleteEvent(eventId, title) {
         // check if user is signed in
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
+        //firebase.auth().onAuthStateChanged(function (user) {
+        //    if (user) {
                 // User is signed in, use their uid for getting their contacts
-                var uid = user.uid;
+                //var uid = user.uid;
                 var confirmation = window.confirm("Are you sure you want to delete the " + title + " event?");
 
                 if (confirmation == true) {
@@ -129,8 +129,10 @@ export default class HorizontalEvent extends Component {
                             console.log("Error deleting event", e);
                         });
                 }
-            }
-        });
+
+            window.location.href = "/allEvents";
+            //}
+        //});
     }
 
 
@@ -279,28 +281,21 @@ class UpdateModal extends Component {
         let clubId1 = this.props.clubId;
         let eventId = this.props.eventId;
 
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-                var uid = user.uid;
-                var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/events/" + eventId;
-                var querystring = require('querystring');
-                axios.put(hyper,
-                    querystring.stringify({
-                        title: eventTitle,
-                        description: eventDescription,
-                        startTime: eventStartTime,
-                        endTime: eventEndTime,
-                        location: eventLocation,
-                        clubId: clubId1,
-                        userId: uid
-                    })).then(res => { console.log(querystring) });
-                window.location.href = "/allEvents";
-            }
-            else {
+        var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/events/" + eventId;
+        var querystring = require('querystring');
+        axios.put(hyper,
+            querystring.stringify({
+                title: eventTitle,
+                description: eventDescription,
+                startTime: eventStartTime,
+                endTime: eventEndTime,
+                location: eventLocation,
+                clubId: clubId1,
+                userId: 'uAy5Y5uJNFdip5z6zeky'
+            })).then(res => { console.log(querystring) });
 
-            }
-        });
-}
+        window.location.href = "/allEvents";
+    }
    
     render() {
     return (
@@ -327,7 +322,7 @@ class UpdateModal extends Component {
                                         <Form onSubmit={this.handleSubmit}>
 
                                             <Form.Group controlId="title">
-                                                <Form.Label>New Event Title</Form.Label>
+                                            <Form.Label>New Event Title</Form.Label>
                                             <Form.Control type="text" placeholder={this.props.title} onChange={this.handleTitleChange} value={this.state.title}  />
                                             </Form.Group>
 

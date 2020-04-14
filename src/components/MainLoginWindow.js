@@ -65,7 +65,6 @@ export default class MainLoginWindow extends Component {
             .catch(error => {
                 console.log('error creating user', error);
             });
-        
     }
 
     render() {

@@ -6,7 +6,6 @@ import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
 // TODO: add onclick for clubs, login, signup
 
 export default class MainNavbar extends Component {
-
     render(){
         return(
             <Container fluid style={styles.container}>
@@ -26,7 +25,7 @@ export default class MainNavbar extends Component {
                                 </Col>
                                 
                                 <Col lg={{ span: 2, offset: 0 }}>
-                                    <Nav.Link href="#Clubs" style={styles.center} > Clubs </Nav.Link>
+                                    <Nav.Link href="#allClubs" style={styles.center} onClick={navigateClubs}> Clubs </Nav.Link>
                                 </Col>
 
                                 <Col lg={{ span: 2, offset: 0 }}>
@@ -49,11 +48,8 @@ export default class MainNavbar extends Component {
                 </Col>
 
             </Container>
-
         );
-
     }
-    
 }
 
 
@@ -67,6 +63,10 @@ const navigateLogin = () => {
 
 const navigateSignup = () => {
     window.location.href = "/register";
+};
+
+const navigateClubs = () => {
+    window.location.href = "/allClubs";
 };
 
 const navigateEvents = () => {

@@ -101,25 +101,30 @@ export default class CreateClub extends React.Component {
     }
 
     submitToDatabase() {
-        debugger;
-        var querystring = require('querystring');
-        //var uid = user.uid;
-        axios.post('https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/clubs',
-            querystring.stringify({
-                name: this.state.name,
-                description: this.state.description,
-                coverImage: this.state.coverImage,
-                meetingInfo: this.state.meetingInfo,
-                email: this.state.email,
-                website: this.state.website,
-                facebook: this.state.facebook,
-                instagram: this.state.instagram,
-                twitter: this.state.twitter,
-                other: this.state.other,
-                userId: 'a'
-            })).then(res => { console.log(querystring) });
-            
-    window.location.href = "/AllClubs";
+        firebase.auth().onAuthStateChanged(user => {
+            var uid;
+
+            if (user) {
+                var querystring = require('querystring');
+                uid = user.uid;
+                axios.post('https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/clubs',
+                    querystring.stringify({
+                        name: this.state.name,
+                        description: this.state.description,
+                        coverImage: this.state.coverImage,
+                        meetingInfo: this.state.meetingInfo,
+                        email: this.state.email,
+                        website: this.state.website,
+                        facebook: this.state.facebook,
+                        instagram: this.state.instagram,
+                        twitter: this.state.twitter,
+                        other: this.state.other,
+                        userId: uid
+                    })).then(res => { console.log(querystring) });
+                }
+            });
+
+        window.location.href = "/AllClubs";
 }
     
     render() {
