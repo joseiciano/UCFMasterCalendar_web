@@ -43,7 +43,7 @@ export default class ClubList extends Component {
                     </Col>
 
                     <Col sm={{ span: 2, offset: 2 }}>
-                        <Button style={Styles.button}> <b>See all </b></Button>
+                        <Button style={Styles.button} onClick={navigateClubs}> <b>See all </b></Button>
                     </Col>
                 </Row>
 
@@ -67,6 +67,10 @@ export default class ClubList extends Component {
         )
     }
 }
+
+const navigateClubs = () => {
+    window.location.href = "/allClubs";
+};
 
 const Styles = {
     card: {
