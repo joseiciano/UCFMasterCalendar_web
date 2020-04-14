@@ -103,7 +103,6 @@ export default class CreateClub extends React.Component {
     submitToDatabase() {
         firebase.auth().onAuthStateChanged(user => {
             var uid;
-
             if (user) {
                 var querystring = require('querystring');
                 uid = user.uid;
@@ -157,15 +156,7 @@ export default class CreateClub extends React.Component {
 
                                        <Form.Group controlId="coverimage">
                                             <Form.Label>Cover Image</Form.Label>
-                                            <div className="input-group">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                                </div>
-                                                <div className="custom-file">
-                                                    <input type="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" value={this.state.coverImage} onChange={this.handleCoverImageChange}/>
-                                                    <label className="custom-file-label" htmlFor="inputGroupFile01">Upload a file or browse your system.</label>
-                                                </div>
-                                            </div>
+                                            <Form.Control type="text" placeholder="Enter your club's cover photo." value={this.state.coverImage} onChange={this.handleCoverImageChange}/>
                                             {/* <Form.Control type="text" placeholder="UNDER CONSTRUCTION." value={this.state.coverImage} onChange={this.handleCoverImageChange}/> */}
                                         </Form.Group>
 
