@@ -108,10 +108,10 @@ export default class HorizontalEvent extends Component {
 
     deleteEvent(eventId, title) {
         // check if user is signed in
-        //firebase.auth().onAuthStateChanged(function (user) {
-        //    if (user) {
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
                 // User is signed in, use their uid for getting their contacts
-                //var uid = user.uid;
+                var uid = user.uid;
                 var confirmation = window.confirm("Are you sure you want to delete the " + title + " event?");
 
                 if (confirmation == true) {
@@ -129,10 +129,8 @@ export default class HorizontalEvent extends Component {
                             console.log("Error deleting event", e);
                         });
                 }
-
-            window.location.href = "/allEvents";
-            //}
-        //});
+            }
+        });
     }
 
 
