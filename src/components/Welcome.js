@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card, Image, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
 import heartPic from "../icons/techHeart.png"
 
 export default class Welcome extends Component {
@@ -32,7 +32,7 @@ export default class Welcome extends Component {
                         </Col>
 
                         <Col sm={{ span: 5, offset: 1 }}>
-                            <Card.Img src={heartPic} style={styles.hearty} fluid />
+                            <Card.Img src={heartPic} style={styles.hearty} responsive/>
                         </Col>
             </Row>
             </Card>
@@ -45,17 +45,20 @@ export default class Welcome extends Component {
 
 const styles = {
     wCard: {
-            position: "realtive",
-            backgroundColor:  "#D0F5F7",
-            color: "#1C8D9B",
-            borderRadius: "50px 50px 50px 50px",
-            borderStyle: "none",
-            boxShadow: "1.5px 1.5px #E6E6E6"
+        position: "relative",
+        backgroundColor: "#D0F5F7",
+        color: "#1C8D9B",
+        borderRadius: "50px 50px 50px 50px",
+        borderStyle: "none",
+        boxShadow: "1.5px 1.5px #E6E6E6",
+        height: "16rem",
+        width: "65rem"
         },
                         
     hearty: {
         height: "100%",
         maxWidth: "100%",
+        width: "100%",
         borderRadius: "50px 50px 50px 50px",
     },
 

@@ -1,10 +1,39 @@
 import React from 'react';
 import { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { CardDeck, Card, Row, Col, Button } from 'react-bootstrap';
+import {Card, Row, Col, Button } from 'react-bootstrap';
 import ClubCard from "../components/ClubCard";
+import * as firebase from "firebase/app";
+import axios from "axios";
 
 export default class ClubList extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            clubs: [],
+        };
+
+    };
+
+    componentDidMount() {
+        let currentComponent = this;
+
+        var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/clubs";
+
+        axios
+            .get(
+                hyper
+            ).then(res => {
+                currentComponent.setState({ clubs: res.data });
+            })
+            .catch(e => {
+                console.log("Error getting events", e);
+            });
+    }
+
+
     render() {
         return (
             <Card style={Styles.card}>
@@ -22,20 +51,17 @@ export default class ClubList extends Component {
                     <Col lg={{ span: 5, offset: 0 }}>
                         <Card.Text style={Styles.subtitle}> Learn about UCF's technology community. </Card.Text>
                     </Col>
-
                 </Row>
 
                 <Row>
-                    <Col sm={{ span: 3, offset: 0 }}>
-                        <ClubCard />
-                    </Col>
-                    <Col sm={{ span: 3, offset: 0 }}>
-
-                        <ClubCard />
-                    </Col>
-                    <Col sm={{ span: 3, offset: 0 }}>
-                        <ClubCard />
-                    </Col>
+                    {
+                        this.state.clubs.map((club, idx) => {
+                            if (idx < 3) {
+                                return <ClubCard key={club.id} name={club.data.name} description={club.data.description} coverImage={club.data.coverImage} />
+                            }
+                        })
+                    }
+                    
                 </Row>
             </Card>
         )
@@ -50,7 +76,6 @@ const Styles = {
 
     subtitle: {
         fontSize: "small",
-        //color: "#7C7C7C"
     },
 
     button: {

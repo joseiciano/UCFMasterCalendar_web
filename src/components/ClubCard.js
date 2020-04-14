@@ -1,21 +1,31 @@
 import React from 'react';
 import { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card, Row, Col, Button } from 'react-bootstrap';
-import clubPic from "../icons/knighthacks-team.jpg"
+import { Card} from 'react-bootstrap';
 
 
 export default class ClubCard extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            name: '',
+            coverImage: '',
+            description: ''
+        }
+    };
+
     render() {
         return (
             <div>
                 <Card style={Styles.card}>
-                    <Card.Img src={clubPic} style={Styles.clubPic} />
+                    <Card.Img src={this.props.coverImage} style={Styles.clubPic} />
                     <Card.Body>
-                        <Card.Title style={Styles.titleText}><b>Knight Hacks</b></Card.Title>
+                        <Card.Title style={Styles.titleText}><b>{this.props.name}</b></Card.Title>
                         <Card.Text style={Styles.bodyText}>
-                            The goal of Knight Hacks is to develop computer science...
-                         </Card.Text>
+                            {this.props.description}
+                        </Card.Text>
                     </Card.Body>
                 </Card>
             </div>
@@ -26,7 +36,8 @@ export default class ClubCard extends Component {
 const Styles = {
     card: {
         width: "16rem",
-        borderRadius: "15px"
+        borderRadius: "15px",
+        margin: "0.5rem"
     },
 
     bodyText: {

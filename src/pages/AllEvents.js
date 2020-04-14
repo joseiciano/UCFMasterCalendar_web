@@ -1,10 +1,11 @@
-import React from 'react';
-import { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Card, Row, Col, Button } from 'react-bootstrap';
-import EventCard from "../components/EventCard";
+import React, { Component } from "react";
+import { Row, Col, Button } from 'react-bootstrap';
+import Navbar from "../components/NavBar";
+import HorizontalEvent from "../components/HorizontalEvent";
 import * as firebase from "firebase/app";
 import axios from "axios";
+
+// To DO: image should be club image.
 
 const days = [
     'Monday',
@@ -43,15 +44,15 @@ const dateendings = [
 ];
 
 
-
-export default class EventList extends Component {
+export default class AllEvents extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             events: [],
-            //clubName: ""
+            //array of the club names
+            clubs: []
         };
 
     };
@@ -59,12 +60,13 @@ export default class EventList extends Component {
     componentDidMount() {
         let currentComponent = this;
 
-        var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/events";
+            var hyper = "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1/events";
 
         axios
             .get(
                 hyper
             ).then(res => {
+                console.log(res)
                 currentComponent.setState({ events: res.data });
             })
             .catch(e => {
@@ -73,34 +75,31 @@ export default class EventList extends Component {
     }
 
     render() {
+
         return (
-            <Card style={Styles.card}>
+            <div style={Styles.allpage}>
                 <Row>
-                    <Col sm={{ span: 3, offset: 0 }}>
-                        <Card.Text> <b> Upcoming Events </b> </Card.Text>
-                    </Col>
-
-                    <Col sm={{ span: 2, offset: 3 }} >
-                        <Button style={Styles.button} onClick={navigateCreateEvent}> <b>Create Event </b></Button>
-                    </Col>
-
-                    <Col sm={{ span: 2, offset: 0 }} >
-                        <Button style={Styles.button} onClick={navigateAllEvents}> <b>See all </b></Button>
+                    <Col >
+                        <Navbar/>
                     </Col>
                 </Row>
+                <br />
+                
 
                 <Row>
-                    <Col lg={{ span: 5, offset: 0 }}>
-                        <Card.Text style={Styles.subtitle}> See what's happening soon in your area. </Card.Text>
+                    <Col sm={{ span: 6, offset: 1 }}>
+                        <p style={Styles.title}> <b> Events </b> </p>
                     </Col>
-                    
-               </Row>
 
-                <Row>
-                    {
-                        this.state.events.map((event, idx) => {
-                            if (idx < 3) {
-                                 let startString = event.data.startTime;
+                    <Col sm={{ span: 4, offset: 1 }}>
+                        <Button variant="outline-info" style={Styles.button} onClick={navigateCreateEvent}> Create New Event </Button>
+                    </Col>
+
+                </Row>
+                {
+                    this.state.events.map((event, idx) => {
+                        if (idx !== -128) {
+                            let startString = event.data.startTime;
                             let endString = event.data.endTime;
 
                             let DaysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -114,6 +113,8 @@ export default class EventList extends Component {
 
                             let fullEndDate = endDateObj.toLocaleDateString(undefined, options);
                             let fullStartDate = startDateObj.toLocaleDateString(undefined, options);
+                            let updatePlaceholder = fullEndDate;
+                            
 
                             if (fullEndDate === fullStartDate) {
                                 fullEndDate = "";
@@ -122,45 +123,42 @@ export default class EventList extends Component {
                             else {
                                 fullEndDate = " - " + fullEndDate;
                             }
-                                let startTime = startDateObj.toLocaleTimeString('en-US');
-                                let endTime = endDateObj.toLocaleTimeString('en-US');
 
-                                return <EventCard title={event.data.title} location={event.data.location} eventId={event.id} date={fullStartDate} endDate={fullEndDate} clubId={event.data.clubId} start={startTime} description={event.data.description} end={endTime}/>
-                            }
-                        })
-                    }
-                </Row>
-            </Card>
-        )
-
-        
-    }
+                            let startTime = startDateObj.toLocaleTimeString('en-US');
+                            let endTime = endDateObj.toLocaleTimeString('en-US');
+                            return <Row>
+                                <Col sm={{ span: 11, offset: 1 }}>
+                                    <HorizontalEvent updatePlaceholder={updatePlaceholder} id={event.id} title={event.data.title} location={event.data.location} description={event.data.description} startTime={startTime} startDate={fullStartDate} endDate={fullEndDate} endTime={endTime} clubId={event.data.clubId} />
+                                </Col>
+                            </Row>
+                        }
+                    })
+                }
+            </div>
+        );
+    }  
 }
-
-const navigateAllEvents= () => {
-    window.location.href = "/allEvents";
-};
 
 const navigateCreateEvent = () => {
     window.location.href = "/createEvent";
 };
 
 const Styles = {
-    card: {
-        width: "67rem",
-        border: "none",
+    allPage: {
+        // disables horizontal scrollbar
+        overflowX: "hidden !important",
     },
 
-    subtitle: {
-        fontSize: "small",
-    }, 
+    title: {
+        fontSize: "x-Large"
+    },
 
     button: {
+        width: "8rem",
+        height: "2rem",
         fontSize: "small",
-        width: "74%",
-        height: "87%",
-        border: "none",
-        backgroundColor: "white",
-        color: "#1C8D9B",
+        borderRadius: "10px",
+        marginLeft: "28%",
+        marginBottom: "-5%"
     }
 };

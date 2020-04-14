@@ -1,13 +1,9 @@
 import React, { Component } from "react";
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import Navbar from "../components/NavBar";
-import EventCard from "../components/EventCard";
 import Welcome from "../components/Welcome";
-import ClubCard from "../components/ClubCard";
 import EventList from "../components/EventList";
 import ClubList from "../components/ClubList";
-
-
 
 
 export default class Main extends Component {
