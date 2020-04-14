@@ -1,0 +1,419 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "UCF Master Calendar",
+    "description" : "UCF Master Calendar API Documentation",
+    "version" : "0.1"
+  },
+  "servers" : [ {
+    "url" : "https://us-central1-ucf-master-calendar.cloudfunctions.net/webApi/api/v1"
+  } ],
+  "paths" : {
+    "/clubs/" : {
+      "get" : {
+        "description" : "Get all clubs",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "description" : "Create a club",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              },
+              "examples" : {
+                "0" : {
+                  "value" : "{\n    \"description\": \"Knight Hacks is two things currently. We are first and foremost an RSO (or Registered Student Organization) on the UCF campus. Secondly we put on annual hackathons to which we invite students from around the country to.\",\n            \"other\": \"Section for any additional information\",\n            \"website\": \"knighthacks.org\",\n            \"instagram\": \"instagram.com/knighthacks\",\n            \"twitter\": \"twitter.com/knighthacks\",\n            \"meetingInfo\": \"Thursdays @ 7:30PM. Meeting locations vary, check the events for more information.\",\n            \"userId\": \"ztPF0O6kQ4capBzTDwMZ\",\n            \"name\": \"Knight Hackz 2\",\n            \"email\": \"team@knighthacks.org\",\n            \"facebook\": \"facebook.com/knighthacks\",\n            \"coverImage\": \"https://jaxbot.me/pics/knighthacks-atrium.jpg\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clubs/{clubId}" : {
+      "put" : {
+        "description" : "Update a club",
+        "parameters" : [ {
+          "name" : "clubId",
+          "in" : "path",
+          "description" : "The clubs's id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_1"
+              },
+              "examples" : {
+                "0" : {
+                  "value" : "{\n    \"description\": \"Knight Hacks is two things currently. We are first and foremost an RSO (or Registered Student Organization) on the UCF campus. Secondly we put on annual hackathons to which we invite students from around the country to.\",\n            \"other\": \"Section for any additional information\",\n            \"website\": \"knighthacks.org\",\n            \"instagram\": \"instagram.com/knighthacks\",\n            \"twitter\": \"twitter.com/knighthacks\",\n            \"meetingInfo\": \"Thursdays @ 7:30PM. Meeting locations vary, check the events for more information.\",\n            \"userId\": \"ztPF0O6kQ4capBzTDwMZ\",\n            \"name\": \"Knight Hackz\",\n            \"email\": \"team@knighthacks.org\",\n            \"facebook\": \"facebook.com/knighthacks\",\n            \"coverImage\": \"https://jaxbot.me/pics/knighthacks-atrium.jpg\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "description" : "Delete a club",
+        "parameters" : [ {
+          "name" : "clubId",
+          "in" : "path",
+          "description" : "The clubs's id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/" : {
+      "get" : {
+        "description" : "Get all events",
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "description" : "Create an event",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_2"
+              },
+              "examples" : {
+                "0" : {
+                  "value" : "{\n    \"startTime\": {\n                \"_seconds\": 1605618000,\n                \"_nanoseconds\": 0\n            },\n            \"description\": \"discriptionhere1\",\n            \"userId\": \"9m2eH20kHaMAOHF0VzcW\",\n            \"clubId\": \"I3qJRDx9gBXOHOF3SDM8\",\n            \"location\": \"dank 420\",\n            \"endTime\": {\n                \"_seconds\": 1605620100,\n                \"_nanoseconds\": 0\n            },\n            \"title\": \"An Introduction To Dank Memeing 2\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{eventId}" : {
+      "get" : {
+        "description" : "Get an event",
+        "parameters" : [ {
+          "name" : "eventId",
+          "in" : "path",
+          "description" : "The event's id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "description" : "Update an event",
+        "parameters" : [ {
+          "name" : "eventId",
+          "in" : "path",
+          "description" : "The event's id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_3"
+              },
+              "examples" : {
+                "0" : {
+                  "value" : "{\n    \"startTime\": {\n                \"_seconds\": 1605618000,\n                \"_nanoseconds\": 0\n            },\n            \"description\": \"discriptionhere1\",\n            \"userId\": \"9m2eH20kHaMAOHF0VzcW\",\n            \"clubId\": \"I3qJRDx9gBXOHOF3SDM8\",\n            \"location\": \"dank 421\",\n            \"endTime\": {\n                \"_seconds\": 1605620100,\n                \"_nanoseconds\": 0\n            },\n            \"title\": \"An Introduction To Dank Memeing 2\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "description" : "Delete an event",
+        "parameters" : [ {
+          "name" : "eventId",
+          "in" : "path",
+          "description" : "The event's id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "body" : {
+        "type" : "object",
+        "properties" : {
+          "other" : {
+            "type" : "string"
+          },
+          "website" : {
+            "type" : "string"
+          },
+          "twitter" : {
+            "type" : "string"
+          },
+          "facebook" : {
+            "type" : "string"
+          },
+          "coverImage" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "meetingInfo" : {
+            "type" : "string"
+          },
+          "instagram" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "body_1" : {
+        "type" : "object",
+        "properties" : {
+          "other" : {
+            "type" : "string"
+          },
+          "website" : {
+            "type" : "string"
+          },
+          "twitter" : {
+            "type" : "string"
+          },
+          "facebook" : {
+            "type" : "string"
+          },
+          "coverImage" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "meetingInfo" : {
+            "type" : "string"
+          },
+          "instagram" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "events_startTime" : {
+        "type" : "object",
+        "properties" : {
+          "_nanoseconds" : {
+            "type" : "integer"
+          },
+          "_seconds" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "body_2" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "clubId" : {
+            "type" : "string"
+          },
+          "startTime" : {
+            "$ref" : "#/components/schemas/events_startTime"
+          },
+          "location" : {
+            "type" : "string"
+          },
+          "endTime" : {
+            "$ref" : "#/components/schemas/events_startTime"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string"
+          }
+        }
+      },
+      "body_3" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "clubId" : {
+            "type" : "string"
+          },
+          "startTime" : {
+            "$ref" : "#/components/schemas/events_startTime"
+          },
+          "location" : {
+            "type" : "string"
+          },
+          "endTime" : {
+            "$ref" : "#/components/schemas/events_startTime"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

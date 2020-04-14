@@ -4,9 +4,11 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AllEvents from "./pages/AllEvents";
 import CreateEventPage from "./pages/CreateEventPage";
+import Swagger from "./components/Swagger";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-// yes login and register are opposite I know 
+
+// yes login and register are opposite I know
 class App extends Component {
   render() {
     return (
@@ -14,9 +16,10 @@ class App extends Component {
         <Route exact path="/" component={Main} />
         <Route exact path="/main" component={Main} />
         <Route exact path="/login" component={Register} />
-        <Route exact path="/register" component={Login} />       
+        <Route exact path="/register" component={Login} />
         <Route exact path="/allEvents" component={AllEvents} />
         <Route exact path="/createEvent" component={CreateEventPage} />
+        <Route exact path="/swagger" component={Swagger} />
       </Router>
     );
   }
