@@ -55,8 +55,12 @@ export default class MainLoginWindow extends Component {
             .auth()
             .createUserWithEmailAndPassword(email, password)
             .then(res => {
-                //toggle();
-               window.location.href = "/Main";
+                const user = firebase.auth().currentUser;
+
+                user.sendEmailVerification();
+            }).then(res => {
+                firebase.auth().signOut();
+                window.location.href = "/login";
             })
             .catch(error => {
                 console.log('error creating user', error);
