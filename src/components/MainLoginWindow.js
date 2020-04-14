@@ -4,7 +4,6 @@ import { Container, Card, Image, Row, Col } from 'react-bootstrap';
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import dude from "../icons/dude.png"
 import headertxt from "../icons/hText.PNG";
-import "Firebase.Auth.FirebaseUser";
 
 // Imports for authentication
 import * as firebase from "firebase/app";
@@ -57,7 +56,7 @@ export default class MainLoginWindow extends Component {
             .createUserWithEmailAndPassword(email, password)
             .then(res => {
                 //toggle();
-                success = true;
+               window.location.href = "/Main";
             })
             .catch(error => {
                 console.log('error creating user', error);
